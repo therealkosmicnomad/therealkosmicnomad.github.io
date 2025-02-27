@@ -1,1 +1,213 @@
-
+<!DOCTYPE html>
+<html lang="en" class="launch-pad">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIZZ™ LAUNCH PAD</title>
+    <style>
+        :root {
+            --menu-bg: #fff2b2;
+            --border-color: #888;
+            --test-window-bg: #000;
+            --container-border: #ffff00;
+            --button-bg: #3498db;
+            --button-hover-bg: #2980b9;
+            --text-color: #2c3e50;
+            --highlight-color: #e74c3c;
+            --secondary-highlight: #f1c40f;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth; /* Smooth scrolling */
+        }
+        
+        .launch-pad {
+            background: url('https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/electric%20blue%20wallpaper.png') no-repeat center center fixed;
+            background-size: cover; /* Full-screen background */
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            animation: fadeIn 1s ease-in-out; /* Fade-in animation */
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start; /* Align items to top */
+            padding: 10px; /* Increased padding for spacing */
+            position: relative;
+        }
+        
+        .title {
+            position: absolute;
+            top: 10px; /* Moved to top */
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: bold;
+            font-size: 32px; /* Doubled from 16px */
+            color: var(--text-color);
+        }
+        
+        .logo {
+            font-weight: bold;
+            font-size: 28px; /* Doubled from 14px */
+            color: var(--highlight-color);
+            position: absolute;
+            top: 10px; /* Upper left corner */
+            left: 10px;
+        }
+        
+        .window-controls {
+            display: flex;
+            position: absolute;
+            top: 10px; /* Top right corner */
+            right: 10px;
+        }
+        
+        .window-button {
+            margin-left: 10px; /* Increased spacing */
+            width: 40px; /* Doubled from 20px */
+            height: 40px; /* Doubled from 20px */
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            background-color: #fff;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-size: 24px; /* Increased for visibility */
+        }
+        
+        .window-button:hover {
+            background-color: #f0f0f0;
+            transform: scale(1.1);
+        }
+        
+        .menu-bar {
+            display: flex;
+            background-color: var(--menu-bg);
+            padding: 5px 0;
+            border: 1px solid var(--border-color);
+            width: 400px;
+            margin: 50px 0 10px 10px; /* Moved below DIZZ™ with spacing */
+            border-radius: 8px;
+        }
+        
+        .menu-item {
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            font-weight: bold;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+        
+        .menu-item:hover {
+            background-color: var(--secondary-highlight);
+            color: #fff;
+        }
+        
+        .main-content {
+            display: flex;
+            flex: 1;
+            padding: 0 10px 10px 10px;
+        }
+        
+        /* Left column */
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            width: 170px;
+            margin-right: 10px;
+        }
+        
+        .sidebar-title {
+            font-size: 12px;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+        
+        .display-types {
+            border: 1px solid var(--border-color);
+            background-color: #eee;
+            padding: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 150px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .display-types:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .display-types-inner {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+            width: 60px;
+        }
+        
+        .device-option {
+            border: 1px solid var(--border-color);
+            background-color: #fff;
+            width: 40px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .device-option:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .device-option.medium {
+            height: 40px;
+        }
+        
+        .device-option.small {
+            width: 30px;
+            height: 30px;
+        }
+        
+        .content-selector {
+            border: 1px solid var(--border-color);
+            background-color: #eee;
+            padding: 10px;
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .content-selector:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .content-selector-inner {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            width: 60px;
+        }
+        
+        .content-icon {
+            width: 40
