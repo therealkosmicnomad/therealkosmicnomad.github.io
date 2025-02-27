@@ -6,7 +6,6 @@
     <title>DIZZ™ LAUNCH PAD</title>
     <style>
         :root {
-            --primary-bg: #c4e6fa;
             --menu-bg: #fff2b2;
             --border-color: #888;
             --test-window-bg: #000;
@@ -30,7 +29,8 @@
         }
         
         body {
-            background-color: #fff;
+            background: url('https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/cosmicbackground.gif') no-repeat center center fixed;
+            background-size: cover; /* Full-screen background */
             min-height: 100vh;
             padding: 20px;
             display: flex;
@@ -42,7 +42,7 @@
             width: 900px;
             height: 600px;
             border: 2px solid #0078d7;
-            background-color: var(--primary-bg);
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white for contrast */
             position: relative;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             display: flex;
@@ -87,7 +87,7 @@
             align-items: center;
             cursor: pointer;
             background-color: #fff;
-            transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
         
         .window-button:hover {
@@ -108,7 +108,7 @@
         .menu-item {
             padding: 5px 10px;
             cursor: pointer;
-            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transitions */
+            transition: background-color 0.3s ease, color 0.3s ease;
             font-weight: bold;
             font-size: 14px;
             color: var(--text-color);
@@ -489,7 +489,6 @@
                             <div class="button plus">+</div>
                         </div>
                     </div>
-                    <!-- No containers shown as per request -->
                 </div>
             </div>
             
