@@ -14,7 +14,7 @@
             --button-hover-bg: #2980b9;
             --text-color: #2c3e50;
             --highlight-color: #e74c3c;
-            --hover-green: #90EE90; /* Light green for hover */
+            --secondary-highlight: #f1c40f;
         }
         
         * {
@@ -44,14 +44,12 @@
             position: relative;
         }
         
-        // Launch Pad Logo Styling
         .header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             padding: 10px;
             position: relative;
-            z-index: 1; /* Base layer */
         }
         
         .title-image {
@@ -60,7 +58,6 @@
             left: 190px;
             transform: translateX(-50%);
             max-width: 400px;
-            z-index: 2; /* Behind menu bar */
         }
         
         .window-controls {
@@ -89,16 +86,14 @@
             transform: scale(1.1);
         }
         
-        // Menu Bar Styling
         .menu-bar {
             display: flex;
             background-color: var(--menu-bg);
             padding: 5px 0;
             border: 1px solid var(--border-color);
             width: 400px;
-            margin: 55px 0 10px 5px;
+            margin: 70px 0 10px 5px; /* Moved up 10px (80px to 70px) and left 5px (10px to 5px) */
             border-radius: 8px;
-            z-index: 3; /* Above logo */
         }
         
         .menu-item {
@@ -111,11 +106,10 @@
         }
         
         .menu-item:hover {
-            background-color: var(--hover-green);
+            background-color: var(--secondary-highlight);
             color: #fff;
         }
         
-        // Main Content Container Styling
         .main-content {
             display: flex;
             flex: 1;
@@ -128,7 +122,6 @@
             flex-direction: column;
             width: 170px;
             margin-right: 10px;
-            margin-top: 20px;
         }
         
         .sidebar-title {
@@ -138,7 +131,6 @@
             text-align: center;
         }
         
-        // Display Type Window Styling
         .display-types {
             border: 1px solid var(--border-color);
             background-color: #eee;
@@ -146,16 +138,22 @@
             margin-bottom: 20px;
             height: 150px;
             width: 80px;
-            display: flex;
+            display: flex; /* For centering boxes */
             flex-direction: column;
             align-items: center;
             transition: background-color 0.3s ease;
-            margin-left: auto; /* Center within left-column */
-            margin-right: auto;
         }
         
         .display-types:hover {
             background-color: #f0f0f0;
+        }
+        
+        .display-types-inner {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            width: 40px; /* Matches content-icon size */
         }
         
         .display-icon {
@@ -167,20 +165,20 @@
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: transform 0.3s ease, background-color 0.3s ease;
         }
         
         .display-icon img {
-            width: 100%;
+            width: 100%; /* Scale down to fit */
             height: 100%;
-            object-fit: contain;
+            object-fit: contain; /* Maintain aspect ratio */
         }
         
         .display-icon:hover {
-            background-color: var(--hover-green);
+            transform: scale(1.1);
+            background-color: var(--secondary-highlight);
         }
         
-        // Content Selector Window Styling
         .content-selector {
             border: 1px solid var(--border-color);
             background-color: #eee;
@@ -191,12 +189,18 @@
             flex-direction: column;
             align-items: center;
             transition: background-color 0.3s ease;
-            margin-left: auto; /* Center within left-column */
-            margin-right: auto;
         }
         
         .content-selector:hover {
             background-color: #f0f0f0;
+        }
+        
+        .content-selector-inner {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            width: 60px;
         }
         
         .content-icon {
@@ -209,86 +213,25 @@
             align-items: center;
             cursor: pointer;
             font-size: 20px;
-            transition: background-color 0.3s ease;
+            transition: transform 0.3s ease, background-color 0.3s ease;
         }
         
         .content-icon:hover {
-            background-color: var(--hover-green);
+            transform: scale(1.1);
+            background-color: var(--secondary-highlight);
         }
         
-        // Test Window Styling
-        .test-window-container {
+        .test-window {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .test-window-title {
-            font-size: 12px;
-            color: var(--text-color);
-            text-align: center;
-            margin-bottom: 5px;
-        }
-        
-        .test-window {
             width: 300px;
             height: 300px;
             background-color: var(--test-window-bg);
             border: 1px solid var(--container-border);
         }
         
-        .build-buttons {
-            display: flex;
-            gap: 10px;
-            position: absolute;
-            top: -40px;
-            right: 0;
-        }
-        
-        .button {
-            width: 30px;
-            height: 30px;
-            border: 1px solid var(--border-color);
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: transform 0.3s ease, background-color 0.3s ease;
-            font-size: 18px;
-            background-color: var(--button-bg);
-            color: #fff;
-        }
-        
-        .button:hover {
-            background-color: var(--button-hover-bg);
-            transform: scale(1.1);
-        }
-        
-        .button.play {
-            background-color: #4fc3f7;
-        }
-        
-        .button.stop {
-            background-color: #000;
-            color: #fff;
-        }
-        
-        .button.grid {
-            background-color: #fff;
-            font-size: 20px;
-            color: #f44336;
-        }
-        
-        .button.plus {
-            background-color: #fff;
-            color: #000;
-        }
-        
-        // Properties Window and Save & Deploy Button Styling
         .right-column {
             display: flex;
             flex-direction: column;
@@ -335,12 +278,12 @@
             display: inline-flex;
             align-items: center;
             padding: 0 10px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
         
         .save-button:hover {
             background-color: #f0f0f0;
-            transform: scale(1.1);
+            transform: scale(1.1); /* Changed from 1.05 for consistency */
         }
         
         .check-icon {
@@ -388,12 +331,10 @@
     <div id="app"></div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize main container
             const app = document.getElementById('app');
             app.className = 'launch-pad';
 
             // Launch Pad Logo
-            // Creates the header and adds the LAUNCH PAD logo image
             const header = document.createElement('div');
             header.className = 'header';
             const titleImage = document.createElement('img');
@@ -403,7 +344,6 @@
             header.appendChild(titleImage);
 
             // Window Controls (part of header)
-            // Adds minimize, maximize, and close buttons to the header
             const windowControls = document.createElement('div');
             windowControls.className = 'window-controls';
             const buttons = ['_', '□', '✕'];
@@ -417,7 +357,6 @@
             app.appendChild(header);
 
             // Menu Bar
-            // Creates the menu bar with FILE, VIEW, OPTIONS, TOOLS, HELP, ABOUT items
             const menuBar = document.createElement('div');
             menuBar.className = 'menu-bar';
             const menuItems = ['FILE', 'VIEW', 'OPTIONS', 'TOOLS', 'HELP', 'ABOUT'];
@@ -430,17 +369,14 @@
             app.appendChild(menuBar);
 
             // Main Content Container
-            // Sets up the flex container for left and right columns
             const mainContent = document.createElement('div');
             mainContent.className = 'main-content';
 
-            // Left Column (Display Type and Content Selector)
-            // Container for Display Type and Content Selector windows
+            // Display Type and Content Selector (Left Column)
             const leftColumn = document.createElement('div');
             leftColumn.className = 'left-column';
 
-            // Display Type Window
-            // Adds the Display Type title and window with a single icon
+            // Display Type
             const displayTitle = document.createElement('div');
             displayTitle.className = 'sidebar-title';
             displayTitle.textContent = 'Display Type';
@@ -448,18 +384,31 @@
 
             const displayTypes = document.createElement('div');
             displayTypes.className = 'display-types drop-zone';
-            const displayIcon = document.createElement('div');
-            displayIcon.className = 'display-icon draggable';
-            displayIcon.id = 'display1';
-            const displayImg = document.createElement('img');
-            displayImg.src = 'https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/Vertical%20Screen%20Icon.png';
-            displayImg.alt = 'Vertical Screen Icon';
-            displayIcon.appendChild(displayImg);
-            displayTypes.appendChild(displayIcon);
+            const displayInner = document.createElement('div');
+            displayInner.className = 'display-types-inner';
+            const displayIcons = [
+                { id: 'display1', src: 'https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/Vertical%20Screen%20Icon.png' },
+                { id: 'display2', text: '□' }, // Placeholder
+                { id: 'display3', text: '□' }  // Placeholder
+            ];
+            displayIcons.forEach(icon => {
+                const div = document.createElement('div');
+                div.className = 'display-icon draggable';
+                div.id = icon.id;
+                if (icon.src) {
+                    const img = document.createElement('img');
+                    img.src = icon.src;
+                    img.alt = 'Display Icon';
+                    div.appendChild(img);
+                } else {
+                    div.textContent = icon.text;
+                }
+                displayInner.appendChild(div);
+            });
+            displayTypes.appendChild(displayInner);
             leftColumn.appendChild(displayTypes);
 
-            // Content Selector Window
-            // Adds the Content Selector title and window with emoji options
+            // Content Selector
             const contentTitle = document.createElement('div');
             contentTitle.className = 'sidebar-title';
             contentTitle.textContent = 'Content Selector';
@@ -467,6 +416,8 @@
 
             const contentSelector = document.createElement('div');
             contentSelector.className = 'content-selector drop-zone';
+            const contentInner = document.createElement('div');
+            contentInner.className = 'content-selector-inner';
             const contentIcons = [
                 { id: 'content1', text: '🖼️' },
                 { id: 'content2', text: '🎬' },
@@ -477,52 +428,22 @@
                 div.className = 'content-icon draggable';
                 div.id = icon.id;
                 div.textContent = icon.text;
-                contentSelector.appendChild(div);
+                contentInner.appendChild(div);
             });
+            contentSelector.appendChild(contentInner);
             leftColumn.appendChild(contentSelector);
             mainContent.appendChild(leftColumn);
 
-            // Test Window
-            // Creates the centered black square with title and buttons above
-            const testWindowContainer = document.createElement('div');
-            testWindowContainer.className = 'test-window-container';
-
-            // Adds the "Test Window" title centered above the square
-            const testWindowTitle = document.createElement('div');
-            testWindowTitle.className = 'test-window-title';
-            testWindowTitle.textContent = 'Test Window';
-            testWindowContainer.appendChild(testWindowTitle);
-
-            // Adds the Play, Stop, Grid, and + buttons above the test window
-            const buildButtons = document.createElement('div');
-            buildButtons.className = 'build-buttons';
-            const buttonData = [
-                { class: 'button play', text: '▶' },
-                { class: 'button stop', text: '■' },
-                { class: 'button grid', text: '⋮⋮' },
-                { class: 'button plus', text: '+' }
-            ];
-            buttonData.forEach(btn => {
-                const div = document.createElement('div');
-                div.className = btn.class;
-                div.textContent = btn.text;
-                buildButtons.appendChild(div);
-            });
-            testWindowContainer.appendChild(buildButtons);
-
-            // Adds the black square test window
+            // Test Window (New Black Square)
             const testWindow = document.createElement('div');
             testWindow.className = 'test-window drop-zone';
-            testWindowContainer.appendChild(testWindow);
-            app.appendChild(testWindowContainer);
+            app.appendChild(testWindow);
 
             // Properties Window and Save & Deploy Button (Right Column)
-            // Container for right-side elements
             const rightColumn = document.createElement('div');
             rightColumn.className = 'right-column';
 
             // Properties Window
-            // Adds the Properties Window title and empty window
             const propertiesTitle = document.createElement('div');
             propertiesTitle.className = 'properties-title';
             propertiesTitle.textContent = 'Properties Window';
@@ -533,7 +454,6 @@
             rightColumn.appendChild(propertiesWindow);
 
             // Save & Deploy Button
-            // Adds the Save & Deploy title and button
             const saveDeploy = document.createElement('div');
             saveDeploy.className = 'save-deploy';
             const saveDeployTitle = document.createElement('div');
@@ -551,7 +471,7 @@
             app.appendChild(mainContent);
 
             // Add click event listeners for interactive elements
-            document.querySelectorAll('.window-button, .menu-item, .content-icon, .display-icon, .save-button, .button').forEach(button => {
+            document.querySelectorAll('.window-button, .menu-item, .content-icon, .display-icon, .save-button').forEach(button => {
                 button.addEventListener('click', function() {
                     this.style.transform = 'scale(0.95)';
                     setTimeout(() => {
