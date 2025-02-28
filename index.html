@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="launch-pad">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,6 +26,11 @@
         
         html {
             scroll-behavior: smooth; /* Smooth scrolling */
+        }
+        
+        body {
+            min-height: 100vh;
+            margin: 0; /* Ensure no default margins */
         }
         
         .launch-pad {
@@ -177,37 +182,3 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         
-        .device-option.medium {
-            height: 40px;
-        }
-        
-        .device-option.small {
-            width: 30px;
-            height: 30px;
-        }
-        
-        .content-selector {
-            border: 1px solid var(--border-color);
-            background-color: #eee;
-            padding: 10px;
-            height: 150px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: background-color 0.3s ease;
-        }
-        
-        .content-selector:hover {
-            background-color: #f0f0f0;
-        }
-        
-        .content-selector-inner {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100%;
-            width: 60px;
-        }
-        
-        .content-icon {
-            width: 40
