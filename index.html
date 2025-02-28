@@ -53,7 +53,7 @@
         
         .title-image {
             position: absolute;
-            top: -50px; /* Moved up a few inches */
+            top: 0; /* Adjusted so bottom touches menu bar top */
             left: 210px; /* Centered over menu bar */
             transform: translateX(-50%);
             max-width: 400px;
@@ -126,7 +126,7 @@
             font-size: 12px;
             margin-bottom: 5px;
             color: var(--text-color);
-            text-align: center; /* Center text over windows */
+            text-align: center;
         }
         
         .display-types {
@@ -231,30 +231,30 @@
         
         .test-window-header {
             display: flex;
-            justify-content: space-between;
+            justify-content: center; /* Center text */
             align-items: center;
             margin-bottom: 5px;
         }
         
         .test-window-title {
-            text-align: left;
             font-size: 12px;
             color: var(--text-color);
+            text-align: center; /* Center text over window */
         }
         
         .test-window {
             border: 1px solid var(--container-border);
             background-color: var(--test-window-bg);
-            height: 75%; /* Reduced by 25% */
+            flex: 1; /* Restored original full size */
             position: relative;
-            margin: 0 auto; /* Center horizontally */
+            margin: 0 auto;
         }
         
         .build-buttons {
             display: flex;
             gap: 10px;
             position: absolute;
-            top: -40px; /* Positioned above test window */
+            top: -40px;
             right: 0;
         }
         
@@ -307,6 +307,7 @@
             font-size: 12px;
             margin-bottom: 5px;
             color: var(--text-color);
+            text-align: center; /* Center text over window */
         }
         
         .properties-window {
@@ -325,12 +326,12 @@
         
         .save-deploy {
             margin-top: auto;
-            text-align: center; /* Center text and button */
+            text-align: center;
         }
         
         .save-deploy-title {
             font-size: 12px;
-            margin-bottom: 2px; /* Reduced to bring closer to button */
+            margin-bottom: 2px;
             color: var(--text-color);
         }
         
@@ -339,7 +340,7 @@
             border: 1px solid var(--border-color);
             background-color: #eee;
             cursor: pointer;
-            display: inline-flex; /* Inline-flex for centering */
+            display: inline-flex;
             align-items: center;
             padding: 0 10px;
             transition: background-color 0.3s ease, transform 0.2s ease;
@@ -443,7 +444,7 @@
 
             const displayTitle = document.createElement('div');
             displayTitle.className = 'sidebar-title';
-            displayTitle.textContent = 'Display Type'; // Updated text
+            displayTitle.textContent = 'Display Type';
             leftColumn.appendChild(displayTitle);
 
             const displayTypes = document.createElement('div');
@@ -466,7 +467,7 @@
 
             const contentTitle = document.createElement('div');
             contentTitle.className = 'sidebar-title';
-            contentTitle.textContent = 'Content Selector'; // Updated text
+            contentTitle.textContent = 'Content Selector';
             leftColumn.appendChild(contentTitle);
 
             const contentSelector = document.createElement('div');
@@ -501,7 +502,6 @@
             testHeader.appendChild(testTitle);
             testWindowContainer.appendChild(testHeader);
 
-            // Move buttons above test window
             const buildButtons = document.createElement('div');
             buildButtons.className = 'build-buttons';
             const buttonData = [
@@ -534,7 +534,6 @@
 
             const propertiesWindow = document.createElement('div');
             propertiesWindow.className = 'properties-window';
-            // No text content added
             rightColumn.appendChild(propertiesWindow);
 
             const saveDeploy = document.createElement('div');
