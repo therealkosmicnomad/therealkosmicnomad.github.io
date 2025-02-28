@@ -53,8 +53,8 @@
         
         .title-image {
             position: absolute;
-            top: 0; /* Adjusted so bottom touches menu bar top */
-            left: 210px; /* Centered over menu bar */
+            top: 0;
+            left: 210px;
             transform: translateX(-50%);
             max-width: 400px;
         }
@@ -91,7 +91,7 @@
             padding: 5px 0;
             border: 1px solid var(--border-color);
             width: 400px;
-            margin: 50px 0 10px 10px; /* Original position */
+            margin: 60px 0 10px 10px; /* Moved down slightly from 50px to 60px */
             border-radius: 8px;
         }
         
@@ -134,50 +134,12 @@
             background-color: #eee;
             padding: 10px;
             margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             height: 150px;
             transition: background-color 0.3s ease;
         }
         
         .display-types:hover {
             background-color: #f0f0f0;
-        }
-        
-        .display-types-inner {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            height: 100%;
-            width: 60px;
-        }
-        
-        .device-option {
-            border: 1px solid var(--border-color);
-            background-color: #fff;
-            width: 40px;
-            height: 60px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .device-option:hover {
-            transform: scale(1.1);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        
-        .device-option.medium {
-            height: 40px;
-        }
-        
-        .device-option.small {
-            width: 30px;
-            height: 30px;
         }
         
         .content-selector {
@@ -231,7 +193,7 @@
         
         .test-window-header {
             display: flex;
-            justify-content: center; /* Center text */
+            justify-content: center;
             align-items: center;
             margin-bottom: 5px;
         }
@@ -239,13 +201,13 @@
         .test-window-title {
             font-size: 12px;
             color: var(--text-color);
-            text-align: center; /* Center text over window */
+            text-align: center;
         }
         
         .test-window {
             border: 1px solid var(--container-border);
             background-color: var(--test-window-bg);
-            flex: 1; /* Restored original full size */
+            height: 400px; /* Explicit height to fit on page */
             position: relative;
             margin: 0 auto;
         }
@@ -307,7 +269,7 @@
             font-size: 12px;
             margin-bottom: 5px;
             color: var(--text-color);
-            text-align: center; /* Center text over window */
+            text-align: center;
         }
         
         .properties-window {
@@ -449,20 +411,7 @@
 
             const displayTypes = document.createElement('div');
             displayTypes.className = 'display-types drop-zone';
-            const displayInner = document.createElement('div');
-            displayInner.className = 'display-types-inner';
-            const deviceOptions = [
-                { id: 'device1', class: 'device-option draggable' },
-                { id: 'device2', class: 'device-option medium draggable' },
-                { id: 'device3', class: 'device-option small draggable' }
-            ];
-            deviceOptions.forEach(opt => {
-                const div = document.createElement('div');
-                div.className = opt.class;
-                div.id = opt.id;
-                displayInner.appendChild(div);
-            });
-            displayTypes.appendChild(displayInner);
+            // No selectable boxes added
             leftColumn.appendChild(displayTypes);
 
             const contentTitle = document.createElement('div');
