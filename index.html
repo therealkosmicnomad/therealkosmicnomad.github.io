@@ -33,14 +33,6 @@
             margin: 0;
         }
         
-        /* Load custom font */
-        @font-face {
-            font-family: 'Rocket Shield';
-            src: url('https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/Fonts/rocket_shield/Rocket%20Shield.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }
-        
         .launch-pad {
             background: url('https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/electric%20blue%20wallpaper.png') no-repeat center center fixed;
             background-size: cover;
@@ -59,17 +51,6 @@
             position: relative;
         }
         
-        .title {
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-weight: bold;
-            font-size: 32px;
-            color: #FFA500; /* Changed to orange */
-            font-family: 'Rocket Shield', Arial, sans-serif; /* Apply custom font */
-        }
-        
         .logo {
             font-weight: bold;
             font-size: 28px;
@@ -77,6 +58,14 @@
             position: absolute;
             top: 10px;
             left: 10px;
+        }
+        
+        .title-image {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 200px; /* Adjust size as needed */
         }
         
         .window-controls {
@@ -453,10 +442,12 @@
             logo.textContent = 'DIZZ™';
             header.appendChild(logo);
 
-            const title = document.createElement('div');
-            title.className = 'title';
-            title.textContent = 'LAUNCH PAD';
-            header.appendChild(title);
+            // Replace "LAUNCH PAD" with image
+            const titleImage = document.createElement('img');
+            titleImage.className = 'title-image';
+            titleImage.src = 'https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/logo%20idea.PNG';
+            titleImage.alt = 'Launch Pad Logo';
+            header.appendChild(titleImage);
 
             const windowControls = document.createElement('div');
             windowControls.className = 'window-controls';
