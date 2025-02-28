@@ -51,21 +51,12 @@
             position: relative;
         }
         
-        .logo {
-            font-weight: bold;
-            font-size: 28px;
-            color: var(--highlight-color);
-            position: absolute;
-            top: 10px;
-            left: 10px;
-        }
-        
         .title-image {
             position: absolute;
             top: 10px;
-            left: 50%;
+            left: 210px; /* Center of menu bar: 10px (left margin) + 400px (width) / 2 = 210px */
             transform: translateX(-50%);
-            max-width: 400px; /* Increased from 200px to 400px (x2) */
+            max-width: 400px; /* Existing size */
         }
         
         .window-controls {
@@ -100,7 +91,7 @@
             padding: 5px 0;
             border: 1px solid var(--border-color);
             width: 400px;
-            margin: 50px 0 10px 10px;
+            margin: 50px 0 10px 10px; /* Adjusted to align with logo */
             border-radius: 8px;
         }
         
@@ -331,7 +322,7 @@
         }
         
         .properties-window:hover {
-            background-color: #f0f0f0;
+            background-color: "f0f0f0";
         }
         
         .device-tree {
@@ -437,12 +428,7 @@
             const header = document.createElement('div');
             header.className = 'header';
 
-            const logo = document.createElement('div');
-            logo.className = 'logo';
-            logo.textContent = 'DIZZ™';
-            header.appendChild(logo);
-
-            // Replace "LAUNCH PAD" with image
+            // "LAUNCH PAD" logo image centered over menu bar
             const titleImage = document.createElement('img');
             titleImage.className = 'title-image';
             titleImage.src = 'https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/logo%20idea.PNG';
