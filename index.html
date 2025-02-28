@@ -14,7 +14,7 @@
             --button-hover-bg: #2980b9;
             --text-color: #2c3e50;
             --highlight-color: #e74c3c;
-            --secondary-highlight: #f1c40f;
+            --hover-green: #90EE90; /* Light green for hover */
         }
         
         * {
@@ -44,12 +44,14 @@
             position: relative;
         }
         
+        // Launch Pad Logo Styling
         .header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             padding: 10px;
             position: relative;
+            z-index: 1; /* Base layer */
         }
         
         .title-image {
@@ -58,6 +60,7 @@
             left: 190px;
             transform: translateX(-50%);
             max-width: 400px;
+            z-index: 2; /* Behind menu bar */
         }
         
         .window-controls {
@@ -86,14 +89,16 @@
             transform: scale(1.1);
         }
         
+        // Menu Bar Styling
         .menu-bar {
             display: flex;
             background-color: var(--menu-bg);
             padding: 5px 0;
             border: 1px solid var(--border-color);
             width: 400px;
-            margin: 55px 0 10px 5px; /* Moved up 15px from 70px to 55px */
+            margin: 55px 0 10px 5px;
             border-radius: 8px;
+            z-index: 3; /* Above logo */
         }
         
         .menu-item {
@@ -106,10 +111,11 @@
         }
         
         .menu-item:hover {
-            background-color: var(--secondary-highlight);
+            background-color: var(--hover-green);
             color: #fff;
         }
         
+        // Main Content Container Styling
         .main-content {
             display: flex;
             flex: 1;
@@ -122,7 +128,7 @@
             flex-direction: column;
             width: 170px;
             margin-right: 10px;
-            margin-top: 20px; /* Moved down 20px */
+            margin-top: 20px;
         }
         
         .sidebar-title {
@@ -132,6 +138,7 @@
             text-align: center;
         }
         
+        // Display Type Window Styling
         .display-types {
             border: 1px solid var(--border-color);
             background-color: #eee;
@@ -143,18 +150,12 @@
             flex-direction: column;
             align-items: center;
             transition: background-color 0.3s ease;
+            margin-left: auto; /* Center within left-column */
+            margin-right: auto;
         }
         
         .display-types:hover {
             background-color: #f0f0f0;
-        }
-        
-        .display-types-inner {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100%;
-            width: 40px;
         }
         
         .display-icon {
@@ -166,7 +167,7 @@
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            transition: transform 0.3s ease, background-color 0.3s ease;
+            transition: background-color 0.3s ease;
         }
         
         .display-icon img {
@@ -176,10 +177,10 @@
         }
         
         .display-icon:hover {
-            transform: scale(1.1);
-            background-color: var(--secondary-highlight);
+            background-color: var(--hover-green);
         }
         
+        // Content Selector Window Styling
         .content-selector {
             border: 1px solid var(--border-color);
             background-color: #eee;
@@ -190,18 +191,12 @@
             flex-direction: column;
             align-items: center;
             transition: background-color 0.3s ease;
+            margin-left: auto; /* Center within left-column */
+            margin-right: auto;
         }
         
         .content-selector:hover {
             background-color: #f0f0f0;
-        }
-        
-        .content-selector-inner {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100%;
-            width: 60px;
         }
         
         .content-icon {
@@ -214,14 +209,14 @@
             align-items: center;
             cursor: pointer;
             font-size: 20px;
-            transition: transform 0.3s ease, background-color 0.3s ease;
+            transition: background-color 0.3s ease;
         }
         
         .content-icon:hover {
-            transform: scale(1.1);
-            background-color: var(--secondary-highlight);
+            background-color: var(--hover-green);
         }
         
+        // Test Window Styling
         .test-window-container {
             position: absolute;
             top: 50%;
@@ -293,6 +288,7 @@
             color: #000;
         }
         
+        // Properties Window and Save & Deploy Button Styling
         .right-column {
             display: flex;
             flex-direction: column;
@@ -339,7 +335,7 @@
             display: inline-flex;
             align-items: center;
             padding: 0 10px;
-            transition: background-color 0.3s ease, transform 0.2s ease;
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
         
         .save-button:hover {
@@ -392,10 +388,12 @@
     <div id="app"></div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize main container
             const app = document.getElementById('app');
             app.className = 'launch-pad';
 
             // Launch Pad Logo
+            // Creates the header and adds the LAUNCH PAD logo image
             const header = document.createElement('div');
             header.className = 'header';
             const titleImage = document.createElement('img');
@@ -405,6 +403,7 @@
             header.appendChild(titleImage);
 
             // Window Controls (part of header)
+            // Adds minimize, maximize, and close buttons to the header
             const windowControls = document.createElement('div');
             windowControls.className = 'window-controls';
             const buttons = ['_', '□', '✕'];
@@ -418,6 +417,7 @@
             app.appendChild(header);
 
             // Menu Bar
+            // Creates the menu bar with FILE, VIEW, OPTIONS, TOOLS, HELP, ABOUT items
             const menuBar = document.createElement('div');
             menuBar.className = 'menu-bar';
             const menuItems = ['FILE', 'VIEW', 'OPTIONS', 'TOOLS', 'HELP', 'ABOUT'];
@@ -430,14 +430,17 @@
             app.appendChild(menuBar);
 
             // Main Content Container
+            // Sets up the flex container for left and right columns
             const mainContent = document.createElement('div');
             mainContent.className = 'main-content';
 
-            // Display Type and Content Selector (Left Column)
+            // Left Column (Display Type and Content Selector)
+            // Container for Display Type and Content Selector windows
             const leftColumn = document.createElement('div');
             leftColumn.className = 'left-column';
 
-            // Display Type
+            // Display Type Window
+            // Adds the Display Type title and window with a single icon
             const displayTitle = document.createElement('div');
             displayTitle.className = 'sidebar-title';
             displayTitle.textContent = 'Display Type';
@@ -445,31 +448,18 @@
 
             const displayTypes = document.createElement('div');
             displayTypes.className = 'display-types drop-zone';
-            const displayInner = document.createElement('div');
-            displayInner.className = 'display-types-inner';
-            const displayIcons = [
-                { id: 'display1', src: 'https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/Vertical%20Screen%20Icon.png' },
-                { id: 'display2', text: '□' },
-                { id: 'display3', text: '□' }
-            ];
-            displayIcons.forEach(icon => {
-                const div = document.createElement('div');
-                div.className = 'display-icon draggable';
-                div.id = icon.id;
-                if (icon.src) {
-                    const img = document.createElement('img');
-                    img.src = icon.src;
-                    img.alt = 'Display Icon';
-                    div.appendChild(img);
-                } else {
-                    div.textContent = icon.text;
-                }
-                displayInner.appendChild(div);
-            });
-            displayTypes.appendChild(displayInner);
+            const displayIcon = document.createElement('div');
+            displayIcon.className = 'display-icon draggable';
+            displayIcon.id = 'display1';
+            const displayImg = document.createElement('img');
+            displayImg.src = 'https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/Vertical%20Screen%20Icon.png';
+            displayImg.alt = 'Vertical Screen Icon';
+            displayIcon.appendChild(displayImg);
+            displayTypes.appendChild(displayIcon);
             leftColumn.appendChild(displayTypes);
 
-            // Content Selector
+            // Content Selector Window
+            // Adds the Content Selector title and window with emoji options
             const contentTitle = document.createElement('div');
             contentTitle.className = 'sidebar-title';
             contentTitle.textContent = 'Content Selector';
@@ -477,8 +467,6 @@
 
             const contentSelector = document.createElement('div');
             contentSelector.className = 'content-selector drop-zone';
-            const contentInner = document.createElement('div');
-            contentInner.className = 'content-selector-inner';
             const contentIcons = [
                 { id: 'content1', text: '🖼️' },
                 { id: 'content2', text: '🎬' },
@@ -489,21 +477,23 @@
                 div.className = 'content-icon draggable';
                 div.id = icon.id;
                 div.textContent = icon.text;
-                contentInner.appendChild(div);
+                contentSelector.appendChild(div);
             });
-            contentSelector.appendChild(contentInner);
             leftColumn.appendChild(contentSelector);
             mainContent.appendChild(leftColumn);
 
-            // Test Window (New Black Square with Buttons and Title)
+            // Test Window
+            // Creates the centered black square with title and buttons above
             const testWindowContainer = document.createElement('div');
             testWindowContainer.className = 'test-window-container';
 
+            // Adds the "Test Window" title centered above the square
             const testWindowTitle = document.createElement('div');
             testWindowTitle.className = 'test-window-title';
             testWindowTitle.textContent = 'Test Window';
             testWindowContainer.appendChild(testWindowTitle);
 
+            // Adds the Play, Stop, Grid, and + buttons above the test window
             const buildButtons = document.createElement('div');
             buildButtons.className = 'build-buttons';
             const buttonData = [
@@ -520,16 +510,19 @@
             });
             testWindowContainer.appendChild(buildButtons);
 
+            // Adds the black square test window
             const testWindow = document.createElement('div');
             testWindow.className = 'test-window drop-zone';
             testWindowContainer.appendChild(testWindow);
             app.appendChild(testWindowContainer);
 
             // Properties Window and Save & Deploy Button (Right Column)
+            // Container for right-side elements
             const rightColumn = document.createElement('div');
             rightColumn.className = 'right-column';
 
             // Properties Window
+            // Adds the Properties Window title and empty window
             const propertiesTitle = document.createElement('div');
             propertiesTitle.className = 'properties-title';
             propertiesTitle.textContent = 'Properties Window';
@@ -540,6 +533,7 @@
             rightColumn.appendChild(propertiesWindow);
 
             // Save & Deploy Button
+            // Adds the Save & Deploy title and button
             const saveDeploy = document.createElement('div');
             saveDeploy.className = 'save-deploy';
             const saveDeployTitle = document.createElement('div');
