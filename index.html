@@ -92,7 +92,7 @@
             padding: 5px 0;
             border: 1px solid var(--border-color);
             width: 400px;
-            margin: 70px 0 10px 5px; /* Moved up 10px (80px to 70px) and left 5px (10px to 5px) */
+            margin: 55px 0 10px 5px; /* Moved up 15px from 70px to 55px */
             border-radius: 8px;
         }
         
@@ -122,6 +122,7 @@
             flex-direction: column;
             width: 170px;
             margin-right: 10px;
+            margin-top: 20px; /* Moved down 20px */
         }
         
         .sidebar-title {
@@ -138,7 +139,7 @@
             margin-bottom: 20px;
             height: 150px;
             width: 80px;
-            display: flex; /* For centering boxes */
+            display: flex;
             flex-direction: column;
             align-items: center;
             transition: background-color 0.3s ease;
@@ -153,7 +154,7 @@
             flex-direction: column;
             justify-content: space-between;
             height: 100%;
-            width: 40px; /* Matches content-icon size */
+            width: 40px;
         }
         
         .display-icon {
@@ -169,9 +170,9 @@
         }
         
         .display-icon img {
-            width: 100%; /* Scale down to fit */
+            width: 100%;
             height: 100%;
-            object-fit: contain; /* Maintain aspect ratio */
+            object-fit: contain;
         }
         
         .display-icon:hover {
@@ -221,15 +222,75 @@
             background-color: var(--secondary-highlight);
         }
         
-        .test-window {
+        .test-window-container {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .test-window-title {
+            font-size: 12px;
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        
+        .test-window {
             width: 300px;
             height: 300px;
             background-color: var(--test-window-bg);
             border: 1px solid var(--container-border);
+        }
+        
+        .build-buttons {
+            display: flex;
+            gap: 10px;
+            position: absolute;
+            top: -40px;
+            right: 0;
+        }
+        
+        .button {
+            width: 30px;
+            height: 30px;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            font-size: 18px;
+            background-color: var(--button-bg);
+            color: #fff;
+        }
+        
+        .button:hover {
+            background-color: var(--button-hover-bg);
+            transform: scale(1.1);
+        }
+        
+        .button.play {
+            background-color: #4fc3f7;
+        }
+        
+        .button.stop {
+            background-color: #000;
+            color: #fff;
+        }
+        
+        .button.grid {
+            background-color: #fff;
+            font-size: 20px;
+            color: #f44336;
+        }
+        
+        .button.plus {
+            background-color: #fff;
+            color: #000;
         }
         
         .right-column {
@@ -283,7 +344,7 @@
         
         .save-button:hover {
             background-color: #f0f0f0;
-            transform: scale(1.1); /* Changed from 1.05 for consistency */
+            transform: scale(1.1);
         }
         
         .check-icon {
@@ -388,8 +449,8 @@
             displayInner.className = 'display-types-inner';
             const displayIcons = [
                 { id: 'display1', src: 'https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/Vertical%20Screen%20Icon.png' },
-                { id: 'display2', text: '□' }, // Placeholder
-                { id: 'display3', text: '□' }  // Placeholder
+                { id: 'display2', text: '□' },
+                { id: 'display3', text: '□' }
             ];
             displayIcons.forEach(icon => {
                 const div = document.createElement('div');
@@ -434,10 +495,35 @@
             leftColumn.appendChild(contentSelector);
             mainContent.appendChild(leftColumn);
 
-            // Test Window (New Black Square)
+            // Test Window (New Black Square with Buttons and Title)
+            const testWindowContainer = document.createElement('div');
+            testWindowContainer.className = 'test-window-container';
+
+            const testWindowTitle = document.createElement('div');
+            testWindowTitle.className = 'test-window-title';
+            testWindowTitle.textContent = 'Test Window';
+            testWindowContainer.appendChild(testWindowTitle);
+
+            const buildButtons = document.createElement('div');
+            buildButtons.className = 'build-buttons';
+            const buttonData = [
+                { class: 'button play', text: '▶' },
+                { class: 'button stop', text: '■' },
+                { class: 'button grid', text: '⋮⋮' },
+                { class: 'button plus', text: '+' }
+            ];
+            buttonData.forEach(btn => {
+                const div = document.createElement('div');
+                div.className = btn.class;
+                div.textContent = btn.text;
+                buildButtons.appendChild(div);
+            });
+            testWindowContainer.appendChild(buildButtons);
+
             const testWindow = document.createElement('div');
             testWindow.className = 'test-window drop-zone';
-            app.appendChild(testWindow);
+            testWindowContainer.appendChild(testWindow);
+            app.appendChild(testWindowContainer);
 
             // Properties Window and Save & Deploy Button (Right Column)
             const rightColumn = document.createElement('div');
@@ -471,7 +557,7 @@
             app.appendChild(mainContent);
 
             // Add click event listeners for interactive elements
-            document.querySelectorAll('.window-button, .menu-item, .content-icon, .display-icon, .save-button').forEach(button => {
+            document.querySelectorAll('.window-button, .menu-item, .content-icon, .display-icon, .save-button, .button').forEach(button => {
                 button.addEventListener('click', function() {
                     this.style.transform = 'scale(0.95)';
                     setTimeout(() => {
