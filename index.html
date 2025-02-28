@@ -33,6 +33,14 @@
             margin: 0;
         }
         
+        /* Load custom font */
+        @font-face {
+            font-family: 'Rocket Shield';
+            src: url('https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/Fonts/rocket_shield/Rocket%20Shield.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
         .launch-pad {
             background: url('https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/electric%20blue%20wallpaper.png') no-repeat center center fixed;
             background-size: cover;
@@ -58,7 +66,8 @@
             transform: translateX(-50%);
             font-weight: bold;
             font-size: 32px;
-            color: var(--text-color);
+            color: #FFA500; /* Changed to orange */
+            font-family: 'Rocket Shield', Arial, sans-serif; /* Apply custom font */
         }
         
         .logo {
