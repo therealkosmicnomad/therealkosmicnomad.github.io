@@ -41,6 +41,7 @@
             display: flex;
             flex-direction: column;
             animation: fadeIn 1s ease-in-out;
+            position: relative; /* For absolute positioning of test window */
         }
         
         .header {
@@ -53,7 +54,7 @@
         
         .title-image {
             position: absolute;
-            top: 0;
+            top: -20px; /* Moved up 20px from 0 */
             left: 210px;
             transform: translateX(-50%);
             max-width: 400px;
@@ -91,7 +92,7 @@
             padding: 5px 0;
             border: 1px solid var(--border-color);
             width: 400px;
-            margin: 60px 0 10px 10px; /* Moved down slightly from 50px to 60px */
+            margin: 110px 0 10px 10px; /* Moved down 50px from 60px to 110px */
             border-radius: 8px;
         }
         
@@ -183,80 +184,15 @@
             background-color: var(--secondary-highlight);
         }
         
-        .test-window-container {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            margin: 0 10px;
-            position: relative;
-        }
-        
-        .test-window-header {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 5px;
-        }
-        
-        .test-window-title {
-            font-size: 12px;
-            color: var(--text-color);
-            text-align: center;
-        }
-        
         .test-window {
-            border: 1px solid var(--container-border);
-            background-color: var(--test-window-bg);
-            height: 400px; /* Explicit height to fit on page */
-            position: relative;
-            margin: 0 auto;
-        }
-        
-        .build-buttons {
-            display: flex;
-            gap: 10px;
             position: absolute;
-            top: -40px;
-            right: 0;
-        }
-        
-        .button {
-            width: 30px;
-            height: 30px;
-            border: 1px solid var(--border-color);
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: transform 0.3s ease, background-color 0.3s ease;
-            font-size: 18px;
-            background-color: var(--button-bg);
-            color: #fff;
-        }
-        
-        .button:hover {
-            background-color: var(--button-hover-bg);
-            transform: scale(1.1);
-        }
-        
-        .button.play {
-            background-color: #4fc3f7;
-        }
-        
-        .button.stop {
-            background-color: #000;
-            color: #fff;
-        }
-        
-        .button.grid {
-            background-color: #fff;
-            font-size: 20px;
-            color: #f44336;
-        }
-        
-        .button.plus {
-            background-color: #fff;
-            color: #000;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px; /* Initial size, adjustable later */
+            height: 300px; /* Initial size, adjustable later */
+            background-color: var(--test-window-bg);
+            border: 1px solid var(--container-border);
         }
         
         .right-column {
@@ -361,17 +297,16 @@
             const app = document.getElementById('app');
             app.className = 'launch-pad';
 
-            // Header
+            // Launch Pad Logo
             const header = document.createElement('div');
             header.className = 'header';
-
-            // "LAUNCH PAD" logo image
             const titleImage = document.createElement('img');
             titleImage.className = 'title-image';
             titleImage.src = 'https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/logo%20idea.PNG';
             titleImage.alt = 'Launch Pad Logo';
             header.appendChild(titleImage);
 
+            // Window Controls (part of header)
             const windowControls = document.createElement('div');
             windowControls.className = 'window-controls';
             const buttons = ['_', '□', '✕'];
@@ -396,14 +331,15 @@
             });
             app.appendChild(menuBar);
 
-            // Main Content
+            // Main Content Container
             const mainContent = document.createElement('div');
             mainContent.className = 'main-content';
 
-            // Left Column
+            // Display Type and Content Selector (Left Column)
             const leftColumn = document.createElement('div');
             leftColumn.className = 'left-column';
 
+            // Display Type
             const displayTitle = document.createElement('div');
             displayTitle.className = 'sidebar-title';
             displayTitle.textContent = 'Display Type';
@@ -411,9 +347,9 @@
 
             const displayTypes = document.createElement('div');
             displayTypes.className = 'display-types drop-zone';
-            // No selectable boxes added
             leftColumn.appendChild(displayTypes);
 
+            // Content Selector
             const contentTitle = document.createElement('div');
             contentTitle.className = 'sidebar-title';
             contentTitle.textContent = 'Content Selector';
@@ -439,43 +375,16 @@
             leftColumn.appendChild(contentSelector);
             mainContent.appendChild(leftColumn);
 
-            // Middle Column
-            const testWindowContainer = document.createElement('div');
-            testWindowContainer.className = 'test-window-container';
-
-            const testHeader = document.createElement('div');
-            testHeader.className = 'test-window-header';
-            const testTitle = document.createElement('div');
-            testTitle.className = 'test-window-title';
-            testTitle.textContent = 'Test Window';
-            testHeader.appendChild(testTitle);
-            testWindowContainer.appendChild(testHeader);
-
-            const buildButtons = document.createElement('div');
-            buildButtons.className = 'build-buttons';
-            const buttonData = [
-                { class: 'button play', text: '▶' },
-                { class: 'button stop', text: '■' },
-                { class: 'button grid', text: '⋮⋮' },
-                { class: 'button plus', text: '+' }
-            ];
-            buttonData.forEach(btn => {
-                const div = document.createElement('div');
-                div.className = btn.class;
-                div.textContent = btn.text;
-                buildButtons.appendChild(div);
-            });
-            testWindowContainer.appendChild(buildButtons);
-
+            // Test Window (New Black Square)
             const testWindow = document.createElement('div');
             testWindow.className = 'test-window drop-zone';
-            testWindowContainer.appendChild(testWindow);
-            mainContent.appendChild(testWindowContainer);
+            app.appendChild(testWindow); // Directly under app for absolute positioning
 
-            // Right Column
+            // Properties Window and Save & Deploy Button (Right Column)
             const rightColumn = document.createElement('div');
             rightColumn.className = 'right-column';
 
+            // Properties Window
             const propertiesTitle = document.createElement('div');
             propertiesTitle.className = 'properties-title';
             propertiesTitle.textContent = 'Properties Window';
@@ -485,6 +394,7 @@
             propertiesWindow.className = 'properties-window';
             rightColumn.appendChild(propertiesWindow);
 
+            // Save & Deploy Button
             const saveDeploy = document.createElement('div');
             saveDeploy.className = 'save-deploy';
             const saveDeployTitle = document.createElement('div');
@@ -501,8 +411,8 @@
 
             app.appendChild(mainContent);
 
-            // Add click event listeners
-            document.querySelectorAll('.button, .window-button, .menu-item, .device-option, .content-icon, .save-button').forEach(button => {
+            // Add click event listeners for interactive elements
+            document.querySelectorAll('.button, .window-button, .menu-item, .content-icon, .save-button').forEach(button => {
                 button.addEventListener('click', function() {
                     this.style.transform = 'scale(0.95)';
                     setTimeout(() => {
