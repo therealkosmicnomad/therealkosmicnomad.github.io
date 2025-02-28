@@ -53,10 +53,10 @@
         
         .title-image {
             position: absolute;
-            top: 10px;
-            left: 210px; /* Center of menu bar: 10px (left margin) + 400px (width) / 2 = 210px */
+            top: -50px; /* Moved up a few inches */
+            left: 210px; /* Centered over menu bar */
             transform: translateX(-50%);
-            max-width: 400px; /* Existing size */
+            max-width: 400px;
         }
         
         .window-controls {
@@ -91,7 +91,7 @@
             padding: 5px 0;
             border: 1px solid var(--border-color);
             width: 400px;
-            margin: 50px 0 10px 10px; /* Adjusted to align with logo */
+            margin: 50px 0 10px 10px; /* Original position */
             border-radius: 8px;
         }
         
@@ -126,6 +126,7 @@
             font-size: 12px;
             margin-bottom: 5px;
             color: var(--text-color);
+            text-align: center; /* Center text over windows */
         }
         
         .display-types {
@@ -244,20 +245,17 @@
         .test-window {
             border: 1px solid var(--container-border);
             background-color: var(--test-window-bg);
-            flex: 1;
+            height: 75%; /* Reduced by 25% */
             position: relative;
-        }
-        
-        .build-preview {
-            position: absolute;
-            top: 0;
-            right: 0;
-            z-index: 10;
+            margin: 0 auto; /* Center horizontally */
         }
         
         .build-buttons {
             display: flex;
             gap: 10px;
+            position: absolute;
+            top: -40px; /* Positioned above test window */
+            right: 0;
         }
         
         .button {
@@ -322,41 +320,17 @@
         }
         
         .properties-window:hover {
-            background-color: "f0f0f0";
-        }
-        
-        .device-tree {
-            list-style-type: none;
-            font-size: 12px;
-        }
-        
-        .device-tree li {
-            padding: 3px 0;
-            display: flex;
-            align-items: center;
-            color: var(--text-color);
-        }
-        
-        .device-tree li::before {
-            content: "• ";
-            margin-right: 5px;
-        }
-        
-        .device-tree .plus::before {
-            content: "+ ";
-        }
-        
-        .nested {
-            padding-left: 20px;
+            background-color: #f0f0f0;
         }
         
         .save-deploy {
             margin-top: auto;
+            text-align: center; /* Center text and button */
         }
         
         .save-deploy-title {
             font-size: 12px;
-            margin-bottom: 5px;
+            margin-bottom: 2px; /* Reduced to bring closer to button */
             color: var(--text-color);
         }
         
@@ -365,7 +339,7 @@
             border: 1px solid var(--border-color);
             background-color: #eee;
             cursor: pointer;
-            display: flex;
+            display: inline-flex; /* Inline-flex for centering */
             align-items: center;
             padding: 0 10px;
             transition: background-color 0.3s ease, transform 0.2s ease;
@@ -428,7 +402,7 @@
             const header = document.createElement('div');
             header.className = 'header';
 
-            // "LAUNCH PAD" logo image centered over menu bar
+            // "LAUNCH PAD" logo image
             const titleImage = document.createElement('img');
             titleImage.className = 'title-image';
             titleImage.src = 'https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/logo%20idea.PNG';
@@ -469,7 +443,7 @@
 
             const displayTitle = document.createElement('div');
             displayTitle.className = 'sidebar-title';
-            displayTitle.innerHTML = 'Choose Display Type<br>(Vertical, Horizontal, Tablet)';
+            displayTitle.textContent = 'Display Type'; // Updated text
             leftColumn.appendChild(displayTitle);
 
             const displayTypes = document.createElement('div');
@@ -492,7 +466,7 @@
 
             const contentTitle = document.createElement('div');
             contentTitle.className = 'sidebar-title';
-            contentTitle.innerHTML = 'Content Selector<br>(Images, Video, Music)';
+            contentTitle.textContent = 'Content Selector'; // Updated text
             leftColumn.appendChild(contentTitle);
 
             const contentSelector = document.createElement('div');
@@ -527,10 +501,7 @@
             testHeader.appendChild(testTitle);
             testWindowContainer.appendChild(testHeader);
 
-            const testWindow = document.createElement('div');
-            testWindow.className = 'test-window drop-zone';
-            const buildPreview = document.createElement('div');
-            buildPreview.className = 'build-preview';
+            // Move buttons above test window
             const buildButtons = document.createElement('div');
             buildButtons.className = 'build-buttons';
             const buttonData = [
@@ -545,8 +516,10 @@
                 div.textContent = btn.text;
                 buildButtons.appendChild(div);
             });
-            buildPreview.appendChild(buildButtons);
-            testWindow.appendChild(buildPreview);
+            testWindowContainer.appendChild(buildButtons);
+
+            const testWindow = document.createElement('div');
+            testWindow.className = 'test-window drop-zone';
             testWindowContainer.appendChild(testWindow);
             mainContent.appendChild(testWindowContainer);
 
@@ -561,39 +534,16 @@
 
             const propertiesWindow = document.createElement('div');
             propertiesWindow.className = 'properties-window';
-            const deviceTree = document.createElement('ul');
-            deviceTree.className = 'device-tree';
-            deviceTree.innerHTML = `
-                <li>NEW DEVICE
-                    <ul class="nested">
-                        <li class="plus">Template 1
-                            <ul class="nested">
-                                <li class="plus">Template (Horizontal or Vertical)
-                                    <ul class="nested">
-                                        <li class="plus">Containers
-                                            <ul class="nested">
-                                                <li>Container 1</li>
-                                                <li>Container 2</li>
-                                                <li>Container 3</li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-            `;
-            propertiesWindow.appendChild(deviceTree);
+            // No text content added
             rightColumn.appendChild(propertiesWindow);
-
-            const saveDeployTitle = document.createElement('div');
-            saveDeployTitle.className = 'save-deploy-title';
-            saveDeployTitle.textContent = 'Save & Deploy Button';
-            rightColumn.appendChild(saveDeployTitle);
 
             const saveDeploy = document.createElement('div');
             saveDeploy.className = 'save-deploy';
+            const saveDeployTitle = document.createElement('div');
+            saveDeployTitle.className = 'save-deploy-title';
+            saveDeployTitle.textContent = 'Save & Deploy Button';
+            saveDeploy.appendChild(saveDeployTitle);
+
             const saveButton = document.createElement('div');
             saveButton.className = 'save-button';
             saveButton.innerHTML = '<span class="check-icon">✓</span><span class="save-text">Everything looks good!</span>';
