@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIZZ™ LAUNCH PAD</title>
+    <style>
+        :root {
+            --menu-bg: #fff2b2;
+            --border-color: #888;
+            --test-window-bg: #000;
+            --container-border: #ffff00;
+            --button-bg: #3498db;
+            --button-hover-bg: #2980b9;
+            --text-color: #2c3e50;
+            --highlight-color: #e74c3c;
+            --secondary-highlight: #f1c40f;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            min-height: 100vh;
+            margin: 0;
+        }
+        
+        .launch-pad {
+            background: url('https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/electric%20blue%20wallpaper.png') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            animation: fadeIn 1s ease-in-out;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 10px;
+            position: relative;
+        }
+        
+        .title {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: bold;
+            font-size: 32px;
+            color: var(--text-color);
+        }
+        
+        .logo {
+            font-weight: bold;
+            font-size: 28px;
+            color: var(--highlight-color);
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+        
+        .window-controls {
+            display: flex;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        
+        .window-button {
+            margin-left: 10px;
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            background-color: #fff;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-size: 24px;
+        }
+        
+        .window-button:hover {
+            background-color: #f0f0f0;
+            transform: scale(1.1);
+        }
+        
+        .menu-bar {
+            display: flex;
+            background-color: var(--menu-bg);
+            padding: 5px 0;
+            border: 1px solid var(--border-color);
+            width: 400px;
+            margin: 50px 0 10px 10px;
+            border-radius: 8px;
+        }
+        
+        .menu-item {
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            font-weight: bold;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+        
+        .menu-item:hover {
+            background-color: var(--secondary-highlight);
+            color: #fff;
+        }
+        
+        .main-content {
+            display: flex;
+            flex: 1;
+            padding: 0 10px 10px 10px;
+        }
+        
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            width: 170px;
+            margin-right: 10px;
+        }
+        
+        .sidebar-title {
+            font-size: 12px;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+        
+        .display-types {
+            border: 1px solid var(--border-color);
+            background-color: #eee;
+            padding: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 150px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .display-types:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .display-types-inner {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+            width: 60px;
+        }
+        
+        .device-option {
+            border: 1px solid var(--border-color);
+            background-color: #fff;
+            width: 40px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .device-option:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .device-option.medium {
+            height: 40px;
+        }
+        
+        .device-option.small {
+            width: 30px;
+            height: 30px;
+        }
+        
+        .content-selector {
+            border: 1px solid var(--border-color);
+            background-color: #eee;
+            padding: 10px;
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .content-selector:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .content-selector-inner {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            width: 60px;
+        }
+        
+        .content-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #fff;
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 20px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        
+        .content-icon:hover {
+            transform: scale(1.1);
+            background-color: var(--secondary-highlight);
+        }
+        
+        .test-window-container {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            margin: 0 10px;
+            position: relative;
+        }
+        
+        .test-window-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .test-window-title {
+            text-align: left;
+            font-size: 12px;
+            color: var(--text-color);
+        }
+        
+        .test-window {
+            border: 1px solid var(--container-border);
+            background-color: var(--test-window-bg);
+            flex: 1;
+            position: relative;
+        }
+        
+        .build-preview {
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 10;
+        }
+        
+        .build-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .button {
+            width: 30px;
+            height: 30px;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            font-size: 18px;
+            background-color: var(--button-bg);
+            color: #fff;
+        }
+        
+        .button:hover {
+            background-color: var(--button-hover-bg);
+            transform: scale(1.1);
+        }
+        
+        .button.play {
+            background-color: #4fc3f7;
+        }
+        
+        .button.stop {
+            background-color: #000;
+            color: #fff;
+        }
+        
+        .button.grid {
+            background-color: #fff;
+            font-size: 20px;
+            color: #f44336;
+        }
+        
+        .button.plus {
+            background-color: #fff;
+            color: #000;
+        }
+        
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+        }
+        
+        .properties-title {
+            font-size: 12px;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+        
+        .properties-window {
+            border: 1px solid var(--border-color);
+            background-color: #eee;
+            height: 250px;
+            margin-bottom: 20px;
+            overflow: auto;
+            padding: 10px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .properties-window:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .device-tree {
+            list-style-type: none;
+            font-size: 12px;
+        }
+        
+        .device-tree li {
+            padding: 3px 0;
+            display: flex;
+            align-items: center;
+            color: var(--text-color);
+        }
+        
+        .device-tree li::before {
+            content: "• ";
+            margin-right: 5px;
+        }
+        
+        .device-tree .plus::before {
+            content: "+ ";
+        }
+        
+        .nested {
+            padding-left: 20px;
+        }
+        
+        .save-deploy {
+            margin-top: auto;
+        }
+        
+        .save-deploy-title {
+            font-size: 12px;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+        
+        .save-button {
+            height: 40px;
+            border: 1px solid var(--border-color);
+            background-color: #eee;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        
+        .save-button:hover {
+            background-color: #f0f0f0;
+            transform: scale(1.05);
+        }
+        
+        .check-icon {
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        
+        .save-text {
+            font-size: 16px;
+            flex: 1;
+            text-align: center;
+            color: var(--text-color);
+        }
+        
+        .draggable {
+            cursor: grab;
+        }
+        
+        .dragging {
+            opacity: 0.5;
+            cursor: grabbing;
+        }
+        
+        .drop-zone {
+            transition: background-color 0.3s ease;
+        }
+        
+        .drop-zone.active {
+            background-color: rgba(255, 255, 0, 0.2);
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const app = document.getElementById('app');
+            app.className = 'launch-pad';
+
+            // Header
+            const header = document.createElement('div');
+            header.className = 'header';
+
+            const logo = document.createElement('div');
+            logo.className = 'logo';
+            logo.textContent = 'DIZZ™';
+            header.appendChild(logo);
+
+            const title = document.createElement('div');
+            title.className = 'title';
+            title.textContent = 'LAUNCH PAD';
+            header.appendChild(title);
+
+            const windowControls = document.createElement('div');
+            windowControls.className = 'window-controls';
+            const buttons = ['_', '□', '✕'];
+            buttons.forEach(btnText => {
+                const btn = document.createElement('div');
+                btn.className = 'window-button';
+                btn.textContent = btnText;
+                windowControls.appendChild(btn);
+            });
+            header.appendChild(windowControls);
+            app.appendChild(header);
+
+            // Menu Bar
+            const menuBar = document.createElement('div');
+            menuBar.className = 'menu-bar';
+            const menuItems = ['FILE', 'VIEW', 'OPTIONS', 'TOOLS', 'HELP', 'ABOUT'];
+            menuItems.forEach(itemText => {
+                const item = document.createElement('div');
+                item.className = 'menu-item';
+                item.textContent = itemText;
+                menuBar.appendChild(item);
+            });
+            app.appendChild(menuBar);
+
+            // Main Content
+            const mainContent = document.createElement('div');
+            mainContent.className = 'main-content';
+
+            // Left Column
+            const leftColumn = document.createElement('div');
+            leftColumn.className = 'left-column';
+
+            const displayTitle = document.createElement('div');
+            displayTitle.className = 'sidebar-title';
+            displayTitle.innerHTML = 'Choose Display Type<br>(Vertical, Horizontal, Tablet)';
+            leftColumn.appendChild(displayTitle);
+
+            const displayTypes = document.createElement('div');
+            displayTypes.className = 'display-types drop-zone';
+            const displayInner = document.createElement('div');
+            displayInner.className = 'display-types-inner';
+            const deviceOptions = [
+                { id: 'device1', class: 'device-option draggable' },
+                { id: 'device2', class: 'device-option medium draggable' },
+                { id: 'device3', class: 'device-option small draggable' }
+            ];
+            deviceOptions.forEach(opt => {
+                const div = document.createElement('div');
+                div.className = opt.class;
+                div.id = opt.id;
+                displayInner.appendChild(div);
+            });
+            displayTypes.appendChild(displayInner);
+            leftColumn.appendChild(displayTypes);
+
+            const contentTitle = document.createElement('div');
+            contentTitle.className = 'sidebar-title';
+            contentTitle.innerHTML = 'Content Selector<br>(Images, Video, Music)';
+            leftColumn.appendChild(contentTitle);
+
+            const contentSelector = document.createElement('div');
+            contentSelector.className = 'content-selector drop-zone';
+            const contentInner = document.createElement('div');
+            contentInner.className = 'content-selector-inner';
+            const contentIcons = [
+                { id: 'content1', text: '🖼️' },
+                { id: 'content2', text: '🎬' },
+                { id: 'content3', text: '🎵' }
+            ];
+            contentIcons.forEach(icon => {
+                const div = document.createElement('div');
+                div.className = 'content-icon draggable';
+                div.id = icon.id;
+                div.textContent = icon.text;
+                contentInner.appendChild(div);
+            });
+            contentSelector.appendChild(contentInner);
+            leftColumn.appendChild(contentSelector);
+            mainContent.appendChild(leftColumn);
+
+            // Middle Column
+            const testWindowContainer = document.createElement('div');
+            testWindowContainer.className = 'test-window-container';
+
+            const testHeader = document.createElement('div');
+            testHeader.className = 'test-window-header';
+            const testTitle = document.createElement('div');
+            testTitle.className = 'test-window-title';
+            testTitle.textContent = 'Test Window';
+            testHeader.appendChild(testTitle);
+            testWindowContainer.appendChild(testHeader);
+
+            const testWindow = document.createElement('div');
+            testWindow.className = 'test-window drop-zone';
+            const buildPreview = document.createElement('div');
+            buildPreview.className = 'build-preview';
+            const buildButtons = document.createElement('div');
+            buildButtons.className = 'build-buttons';
+            const buttonData = [
+                { class: 'button play', text: '▶' },
+                { class: 'button stop', text: '■' },
+                { class: 'button grid', text: '⋮⋮' },
+                { class: 'button plus', text: '+' }
+            ];
+            buttonData.forEach(btn => {
+                const div = document.createElement('div');
+                div.className = btn.class;
+                div.textContent = btn.text;
+                buildButtons.appendChild(div);
+            });
+            buildPreview.appendChild(buildButtons);
+            testWindow.appendChild(buildPreview);
+            testWindowContainer.appendChild(testWindow);
+            mainContent.appendChild(testWindowContainer);
+
+            // Right Column
+            const rightColumn = document.createElement('div');
+            rightColumn.className = 'right-column';
+
+            const propertiesTitle = document.createElement('div');
+            propertiesTitle.className = 'properties-title';
+            propertiesTitle.textContent = 'Properties Window';
+            rightColumn.appendChild(propertiesTitle);
+
+            const propertiesWindow = document.createElement('div');
+            propertiesWindow.className = 'properties-window';
+            const deviceTree = document.createElement('ul');
+            deviceTree.className = 'device-tree';
+            deviceTree.innerHTML = `
+                <li>NEW DEVICE
+                    <ul class="nested">
+                        <li class="plus">Template 1
+                            <ul class="nested">
+                                <li class="plus">Template (Horizontal or Vertical)
+                                    <ul class="nested">
+                                        <li class="plus">Containers
+                                            <ul class="nested">
+                                                <li>Container 1</li>
+                                                <li>Container 2</li>
+                                                <li>Container 3</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            `;
+            propertiesWindow.appendChild(deviceTree);
+            rightColumn.appendChild(propertiesWindow);
+
+            const saveDeployTitle = document.createElement('div');
+            saveDeployTitle.className = 'save-deploy-title';
+            saveDeployTitle.textContent = 'Save & Deploy Button';
+            rightColumn.appendChild(saveDeployTitle);
+
+            const saveDeploy = document.createElement('div');
+            saveDeploy.className = 'save-deploy';
+            const saveButton = document.createElement('div');
+            saveButton.className = 'save-button';
+            saveButton.innerHTML = '<span class="check-icon">✓</span><span class="save-text">Everything looks good!</span>';
+            saveDeploy.appendChild(saveButton);
+            rightColumn.appendChild(saveDeploy);
+            mainContent.appendChild(rightColumn);
+
+            app.appendChild(mainContent);
+
+            // Add click event listeners
+            document.querySelectorAll('.button, .window-button, .menu-item, .device-option, .content-icon, .save-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 100);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
