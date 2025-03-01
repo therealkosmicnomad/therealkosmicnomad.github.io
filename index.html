@@ -8,7 +8,7 @@
         :root {
             --border-color: #888;
             --text-color: #2c3e50;
-            --button-bg: #3498db; /* Same blue as LAUNCH PAD buttons */
+            --button-bg: #3498db;
             --button-hover-bg: #2980b9;
             --input-bg: #fff;
             --input-border: #ccc;
@@ -30,44 +30,35 @@
             margin: 0;
         }
         
-        // Main Container Styling
         .login-page {
-            background: url('https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/electric%20blue%20wallpaper.png') no-repeat center center fixed;
-            background-size: cover;
+            background: #0892D0; /* Solid color background */
             min-height: 100vh;
             padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center; /* Center content vertically */
+            justify-content: center;
             animation: fadeIn 1s ease-in-out;
             position: relative;
         }
         
-        // LAUNCH PAD Logo Styling
-        .title-image {
-            max-width: 400px; /* Same size as LAUNCH PAD */
-            margin-bottom: 20px; /* Space below logo */
-        }
-        
-        // Login Form Styling
         .login-form {
-            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white for contrast */
-            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 15px;
             border-radius: 8px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 300px; /* Fixed width for form */
+            width: 200px; /* Smaller width */
         }
         
         .login-input {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
+            padding: 8px; /* Smaller padding */
+            margin-bottom: 10px; /* Smaller margin */
             border: 1px solid var(--input-border);
             border-radius: 4px;
-            font-size: 14px;
+            font-size: 12px; /* Smaller font */
             background-color: var(--input-bg);
             color: var(--text-color);
             outline: none;
@@ -75,18 +66,17 @@
         }
         
         .login-input:focus {
-            border-color: var(--button-bg); /* Blue focus border */
+            border-color: var(--button-bg);
         }
         
-        // Let's Go! Button Styling
         .login-button {
             width: 100%;
-            padding: 10px;
+            padding: 8px; /* Smaller padding */
             background-color: var(--button-bg);
             color: #fff;
             border: none;
             border-radius: 4px;
-            font-size: 16px;
+            font-size: 14px; /* Smaller font */
             font-weight: bold;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
@@ -105,47 +95,42 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
+        
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+        
+        .shake {
+            animation: shake 0.3s ease-in-out;
+        }
     </style>
 </head>
 <body>
     <div id="app"></div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize main container
             const app = document.getElementById('app');
             app.className = 'login-page';
 
-            // LAUNCH PAD Logo
-            // Adds the LAUNCH PAD logo slightly above center
-            const logo = document.createElement('img');
-            logo.className = 'title-image';
-            logo.src = 'https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/logo%20idea.PNG';
-            logo.alt = 'Launch Pad Logo';
-            app.appendChild(logo);
-
-            // Login Form
-            // Creates a container for username and password fields
             const loginForm = document.createElement('div');
             loginForm.className = 'login-form';
 
-            // Username Field
-            // Adds the username input field
             const usernameInput = document.createElement('input');
             usernameInput.className = 'login-input';
             usernameInput.type = 'text';
             usernameInput.placeholder = 'Username';
             loginForm.appendChild(usernameInput);
 
-            // Password Field
-            // Adds the password input field
             const passwordInput = document.createElement('input');
             passwordInput.className = 'login-input';
             passwordInput.type = 'password';
             passwordInput.placeholder = 'Password';
             loginForm.appendChild(passwordInput);
 
-            // Let's Go! Button
-            // Adds the login button
             const loginButton = document.createElement('button');
             loginButton.className = 'login-button';
             loginButton.textContent = "Let's Go!";
@@ -153,12 +138,25 @@
 
             app.appendChild(loginForm);
 
-            // Add click event listener for the login button (placeholder for functionality)
+            // Hard-coded admin credentials (in a real application, this should be handled server-side)
+            const ADMIN_USERNAME = "admin"; // These should be securely stored
+            const ADMIN_PASSWORD = "password123"; // Not hardcoded in production
+
             loginButton.addEventListener('click', function() {
-                // Placeholder action - could redirect to LAUNCH PAD page
-                console.log('Login clicked! Username:', usernameInput.value, 'Password:', passwordInput.value);
-                // Example redirect (uncomment and adjust URL as needed):
-                // window.location.href = 'https://therealkosmicnomad.github.io/launchpad.html';
+                const enteredUsername = usernameInput.value;
+                const enteredPassword = passwordInput.value;
+
+                if (enteredUsername === ADMIN_USERNAME && enteredPassword === ADMIN_PASSWORD) {
+                    // Redirect to Home Page
+                    window.location.href = 'https://therealkosmicnomad.github.io/Home%20Page.html';
+                } else {
+                    // Shake animation and alert
+                    loginForm.classList.add('shake');
+                    setTimeout(() => {
+                        loginForm.classList.remove('shake');
+                        alert('Incorrect Login');
+                    }, 300); // Match shake animation duration
+                }
             });
         });
     </script>
