@@ -43,27 +43,27 @@
         }
         
         .title-image {
-            max-width: 800px; /* Increased from 400px to 800px (x2) */
-            margin-bottom: 40px; /* Increased from 20px to 40px for proportional spacing */
+            max-width: 800px;
+            margin-bottom: 40px;
         }
         
         .login-form {
             background-color: rgba(255, 255, 255, 0.9);
-            padding: 30px; /* Increased from 15px to 30px (x2) */
+            padding: 30px;
             border-radius: 8px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 400px; /* Increased from 200px to 400px (x2) */
+            width: 400px;
         }
         
         .login-input {
             width: 100%;
-            padding: 16px; /* Increased from 8px to 16px (x2) */
-            margin-bottom: 20px; /* Increased from 10px to 20px (x2) */
+            padding: 16px;
+            margin-bottom: 20px;
             border: 1px solid var(--input-border);
             border-radius: 4px;
-            font-size: 24px; /* Increased from 12px to 24px (x2) */
+            font-size: 24px;
             background-color: var(--input-bg);
             color: var(--text-color);
             outline: none;
@@ -76,12 +76,12 @@
         
         .login-button {
             width: 100%;
-            padding: 16px; /* Increased from 8px to 16px (x2) */
+            padding: 16px;
             background-color: var(--button-bg);
             color: #fff;
             border: none;
             border-radius: 4px;
-            font-size: 28px; /* Increased from 14px to 28px (x2) */
+            font-size: 28px;
             font-weight: bold;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
@@ -157,6 +157,8 @@
                 const enteredPassword = passwordInput.value;
 
                 if (enteredUsername === ADMIN_USERNAME && enteredPassword === ADMIN_PASSWORD) {
+                    // Set login flag in localStorage
+                    localStorage.setItem('isAuthenticated', 'true');
                     window.location.href = 'https://therealkosmicnomad.github.io/Home%20Page.html';
                 } else {
                     loginForm.classList.add('shake');
