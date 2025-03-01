@@ -42,6 +42,11 @@
             position: relative;
         }
         
+        .title-image {
+            max-width: 400px; /* Matching Home Page.html size */
+            margin-bottom: 20px; /* Space below logo */
+        }
+        
         .login-form {
             background-color: rgba(255, 255, 255, 0.9);
             padding: 15px;
@@ -116,6 +121,13 @@
             const app = document.getElementById('app');
             app.className = 'login-page';
 
+            // Add logo
+            const logo = document.createElement('img');
+            logo.className = 'title-image';
+            logo.src = 'https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/logo%20idea.PNG';
+            logo.alt = 'Logo';
+            app.appendChild(logo);
+
             const loginForm = document.createElement('div');
             loginForm.className = 'login-form';
 
@@ -138,7 +150,6 @@
 
             app.appendChild(loginForm);
 
-            // Updated admin credentials
             const ADMIN_USERNAME = "Michael";
             const ADMIN_PASSWORD = "12345";
 
@@ -147,10 +158,8 @@
                 const enteredPassword = passwordInput.value;
 
                 if (enteredUsername === ADMIN_USERNAME && enteredPassword === ADMIN_PASSWORD) {
-                    // Redirect to Home Page - using full URL
                     window.location.href = 'https://therealkosmicnomad.github.io/Home%20Page.html';
                 } else {
-                    // Shake animation and alert
                     loginForm.classList.add('shake');
                     setTimeout(() => {
                         loginForm.classList.remove('shake');
