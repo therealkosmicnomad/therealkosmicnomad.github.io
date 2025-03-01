@@ -13,24 +13,19 @@
             --input-bg: #fff;
             --input-border: #ccc;
         }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: Arial, sans-serif;
         }
-        
         html {
             scroll-behavior: smooth;
         }
-        
         body {
             min-height: 100vh;
             margin: 0;
         }
-nne
-
         .login-page {
             background: #0892D0;
             min-height: 100vh;
@@ -42,12 +37,10 @@ nne
             animation: fadeIn 1s ease-in-out;
             position: relative;
         }
-        
         .title-image {
             max-width: 800px;
             margin-bottom: 40px;
         }
-        
         .login-form {
             background-color: rgba(255, 255, 255, 0.9);
             padding: 30px;
@@ -57,7 +50,6 @@ nne
             align-items: center;
             width: 400px;
         }
-        
         .login-input {
             width: 100%;
             padding: 16px;
@@ -70,11 +62,9 @@ nne
             outline: none;
             transition: border-color 0.3s ease;
         }
-        
         .login-input:focus {
             border-color: var(--button-bg);
         }
-        
         .login-button {
             width: 100%;
             padding: 16px;
@@ -87,21 +77,17 @@ nne
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
         }
-        
         .login-button:hover {
             background-color: var(--button-hover-bg);
             transform: scale(1.05);
         }
-        
         .fade-in {
             animation: fadeIn 1s ease-in-out;
         }
-        
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
-        
         @keyframes shake {
             0% { transform: translateX(0); }
             25% { transform: translateX(-5px); }
@@ -109,7 +95,6 @@ nne
             75% { transform: translateX(-5px); }
             100% { transform: translateX(0); }
         }
-        
         .shake {
             animation: shake 0.3s ease-in-out;
         }
@@ -159,8 +144,17 @@ nne
 
                 if (enteredUsername === ADMIN_USERNAME && enteredPassword === ADMIN_PASSWORD) {
                     localStorage.setItem('isAuthenticated', 'true');
+                    console.log('Authenticated, redirecting to Home Page');
                     window.location.href = 'https://therealkosmicnomad.github.io/Home%20Page.html';
                 } else {
                     loginForm.classList.add('shake');
                     setTimeout(() => {
-                        loginForm.classList.remove('shake
+                        loginForm.classList.remove('shake');
+                        alert('Incorrect Login. Please try again.');
+                    }, 300);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
