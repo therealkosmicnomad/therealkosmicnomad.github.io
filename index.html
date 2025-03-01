@@ -31,7 +31,7 @@
         }
         
         .login-page {
-            background: #0892D0; /* Solid color background */
+            background: #0892D0;
             min-height: 100vh;
             padding: 20px;
             display: flex;
@@ -49,16 +49,16 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 200px; /* Smaller width */
+            width: 200px;
         }
         
         .login-input {
             width: 100%;
-            padding: 8px; /* Smaller padding */
-            margin-bottom: 10px; /* Smaller margin */
+            padding: 8px;
+            margin-bottom: 10px;
             border: 1px solid var(--input-border);
             border-radius: 4px;
-            font-size: 12px; /* Smaller font */
+            font-size: 12px;
             background-color: var(--input-bg);
             color: var(--text-color);
             outline: none;
@@ -71,12 +71,12 @@
         
         .login-button {
             width: 100%;
-            padding: 8px; /* Smaller padding */
+            padding: 8px;
             background-color: var(--button-bg);
             color: #fff;
             border: none;
             border-radius: 4px;
-            font-size: 14px; /* Smaller font */
+            font-size: 14px;
             font-weight: bold;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
@@ -138,16 +138,16 @@
 
             app.appendChild(loginForm);
 
-            // Hard-coded admin credentials (in a real application, this should be handled server-side)
-            const ADMIN_USERNAME = "admin"; // These should be securely stored
-            const ADMIN_PASSWORD = "password123"; // Not hardcoded in production
+            // Updated admin credentials
+            const ADMIN_USERNAME = "Michael";
+            const ADMIN_PASSWORD = "12345";
 
             loginButton.addEventListener('click', function() {
                 const enteredUsername = usernameInput.value;
                 const enteredPassword = passwordInput.value;
 
                 if (enteredUsername === ADMIN_USERNAME && enteredPassword === ADMIN_PASSWORD) {
-                    // Redirect to Home Page
+                    // Redirect to Home Page - using full URL
                     window.location.href = 'https://therealkosmicnomad.github.io/Home%20Page.html';
                 } else {
                     // Shake animation and alert
@@ -155,7 +155,7 @@
                     setTimeout(() => {
                         loginForm.classList.remove('shake');
                         alert('Incorrect Login');
-                    }, 300); // Match shake animation duration
+                    }, 300);
                 }
             });
         });
