@@ -43,8 +43,8 @@
         }
         
         .title-image {
-            max-width: 400px; /* Matching Home Page.html size */
-            margin-bottom: 20px; /* Space below logo */
+            max-width: 400px;
+            margin-bottom: 20px;
         }
         
         .login-form {
@@ -121,10 +121,10 @@
             const app = document.getElementById('app');
             app.className = 'login-page';
 
-            // Add logo
+            // Add logo with correct raw URL
             const logo = document.createElement('img');
             logo.className = 'title-image';
-            logo.src = 'https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/logo%20idea.PNG';
+            logo.src = 'https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/logo%20idea.png';
             logo.alt = 'Logo';
             app.appendChild(logo);
 
