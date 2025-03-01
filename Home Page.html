@@ -16,23 +16,19 @@
             --highlight-color: #e74c3c;
             --secondary-highlight: #f1c40f;
         }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: Arial, sans-serif;
         }
-        
         html {
             scroll-behavior: smooth;
         }
-        
         body {
             min-height: 100vh;
             margin: 0;
         }
-        
         .launch-pad {
             background: url('https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/electric%20blue%20wallpaper.png') no-repeat center center fixed;
             background-size: cover;
@@ -43,7 +39,6 @@
             animation: fadeIn 1s ease-in-out;
             position: relative;
         }
-        
         .header {
             display: flex;
             justify-content: space-between;
@@ -51,7 +46,6 @@
             padding: 10px;
             position: relative;
         }
-        
         .title-image {
             position: absolute;
             top: -20px;
@@ -59,14 +53,12 @@
             transform: translateX(-50%);
             max-width: 400px;
         }
-        
         .window-controls {
             display: flex;
             position: absolute;
             top: 10px;
             right: 10px;
         }
-        
         .window-button {
             margin-left: 10px;
             width: 40px;
@@ -80,12 +72,10 @@
             transition: background-color 0.3s ease, transform 0.2s ease;
             font-size: 24px;
         }
-        
         .window-button:hover {
             background-color: #f0f0f0;
             transform: scale(1.1);
         }
-        
         .menu-bar {
             display: flex;
             background-color: var(--menu-bg);
@@ -95,7 +85,6 @@
             margin: 70px 0 10px 5px;
             border-radius: 8px;
         }
-        
         .menu-item {
             padding: 5px 10px;
             cursor: pointer;
@@ -104,33 +93,28 @@
             font-size: 14px;
             color: var(--text-color);
         }
-        
         .menu-item:hover {
             background-color: var(--secondary-highlight);
             color: #fff;
         }
-        
         .main-content {
             display: flex;
             flex: 1;
             padding: 0 10px 10px 10px;
             justify-content: space-between;
         }
-        
         .left-column {
             display: flex;
             flex-direction: column;
             width: 170px;
             margin-right: 10px;
         }
-        
         .sidebar-title {
             font-size: 12px;
             margin-bottom: 5px;
             color: var(--text-color);
             text-align: center;
         }
-        
         .display-types {
             border: 1px solid var(--border-color);
             background-color: #eee;
@@ -143,11 +127,9 @@
             align-items: center;
             transition: background-color 0.3s ease;
         }
-        
         .display-types:hover {
             background-color: #f0f0f0;
         }
-        
         .display-types-inner {
             display: flex;
             flex-direction: column;
@@ -155,7 +137,6 @@
             height: 100%;
             width: 40px;
         }
-        
         .display-icon {
             width: 40px;
             height: 40px;
@@ -167,18 +148,15 @@
             cursor: pointer;
             transition: transform 0.3s ease, background-color 0.3s ease;
         }
-        
         .display-icon img {
             width: 100%;
             height: 100%;
             object-fit: contain;
         }
-        
         .display-icon:hover {
             transform: scale(1.1);
             background-color: var(--secondary-highlight);
         }
-        
         .content-selector {
             border: 1px solid var(--border-color);
             background-color: #eee;
@@ -190,14 +168,248 @@
             align-items: center;
             transition: background-color 0.3s ease;
         }
-        
         .content-selector:hover {
             background-color: #f0f0f0;
         }
-        
         .content-selector-inner {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             height: 100%;
-            width: 60px
+            width: 60px;
+        }
+        .content-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #fff;
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 20px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        .content-icon:hover {
+            transform: scale(1.1);
+            background-color: var(--secondary-highlight);
+        }
+        .test-window {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            background-color: var(--test-window-bg);
+            border: 1px solid var(--container-border);
+        }
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+        }
+        .properties-title {
+            font-size: 12px;
+            margin-bottom: 5px;
+            color: var(--text-color);
+            text-align: center;
+        }
+        .properties-window {
+            border: 1px solid var(--border-color);
+            background-color: #eee;
+            height: 250px;
+            margin-bottom: 20px;
+            overflow: auto;
+            padding: 10px;
+            transition: background-color 0.3s ease;
+        }
+        .properties-window:hover {
+            background-color: #f0f0f0;
+        }
+        .save-deploy {
+            margin-top: auto;
+            text-align: center;
+        }
+        .save-deploy-title {
+            font-size: 12px;
+            margin-bottom: 2px;
+            color: var(--text-color);
+        }
+        .save-button {
+            height: 40px;
+            border: 1px solid var(--border-color);
+            background-color: #eee;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            padding: 0 10px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .save-button:hover {
+            background-color: #f0f0f0;
+            transform: scale(1.1);
+        }
+        .check-icon {
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        .save-text {
+            font-size: 16px;
+            flex: 1;
+            text-align: center;
+            color: var(--text-color);
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // Check authentication status on page load
+        console.log('Checking authentication:', localStorage.getItem('isAuthenticated'));
+        if (localStorage.getItem('isAuthenticated') !== 'true') {
+            window.location.href = 'https://therealkosmicnomad.github.io/';
+        }
+    </script>
+    <div id="app"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const app = document.getElementById('app');
+            app.className = 'launch-pad';
+
+            const header = document.createElement('div');
+            header.className = 'header';
+            const titleImage = document.createElement('img');
+            titleImage.className = 'title-image';
+            titleImage.src = 'https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/logo%20idea.PNG';
+            titleImage.alt = 'Launch Pad Logo';
+            header.appendChild(titleImage);
+
+            const windowControls = document.createElement('div');
+            windowControls.className = 'window-controls';
+            const buttons = ['_', '□', '✕'];
+            buttons.forEach(btnText => {
+                const btn = document.createElement('div');
+                btn.className = 'window-button';
+                btn.textContent = btnText;
+                windowControls.appendChild(btn);
+            });
+            header.appendChild(windowControls);
+            app.appendChild(header);
+
+            const menuBar = document.createElement('div');
+            menuBar.className = 'menu-bar';
+            const menuItems = ['FILE', 'VIEW', 'OPTIONS', 'TOOLS', 'HELP', 'ABOUT'];
+            menuItems.forEach(itemText => {
+                const item = document.createElement('div');
+                item.className = 'menu-item';
+                item.textContent = itemText;
+                menuBar.appendChild(item);
+            });
+            app.appendChild(menuBar);
+
+            const mainContent = document.createElement('div');
+            mainContent.className = 'main-content';
+
+            const leftColumn = document.createElement('div');
+            leftColumn.className = 'left-column';
+
+            const displayTitle = document.createElement('div');
+            displayTitle.className = 'sidebar-title';
+            displayTitle.textContent = 'Display Type';
+            leftColumn.appendChild(displayTitle);
+
+            const displayTypes = document.createElement('div');
+            displayTypes.className = 'display-types';
+            const displayInner = document.createElement('div');
+            displayInner.className = 'display-types-inner';
+            const displayIcons = [
+                { id: 'display1', src: 'https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/Vertical%20Screen%20Icon.png' },
+                { id: 'display2', text: '□' },
+                { id: 'display3', text: '□' }
+            ];
+            displayIcons.forEach(icon => {
+                const div = document.createElement('div');
+                div.className = 'display-icon';
+                div.id = icon.id;
+                if (icon.src) {
+                    const img = document.createElement('img');
+                    img.src = icon.src;
+                    img.alt = 'Display Icon';
+                    div.appendChild(img);
+                } else {
+                    div.textContent = icon.text;
+                }
+                displayInner.appendChild(div);
+            });
+            displayTypes.appendChild(displayInner);
+            leftColumn.appendChild(displayTypes);
+
+            const contentTitle = document.createElement('div');
+            contentTitle.className = 'sidebar-title';
+            contentTitle.textContent = 'Content Selector';
+            leftColumn.appendChild(contentTitle);
+
+            const contentSelector = document.createElement('div');
+            contentSelector.className = 'content-selector';
+            const contentInner = document.createElement('div');
+            contentInner.className = 'content-selector-inner';
+            const contentIcons = [
+                { id: 'content1', text: '🖼️' },
+                { id: 'content2', text: '🎬' },
+                { id: 'content3', text: '🎵' }
+            ];
+            contentIcons.forEach(icon => {
+                const div = document.createElement('div');
+                div.className = 'content-icon';
+                div.id = icon.id;
+                div.textContent = icon.text;
+                contentInner.appendChild(div);
+            });
+            contentSelector.appendChild(contentInner);
+            leftColumn.appendChild(contentSelector);
+            mainContent.appendChild(leftColumn);
+
+            const testWindow = document.createElement('div');
+            testWindow.className = 'test-window';
+            app.appendChild(testWindow);
+
+            const rightColumn = document.createElement('div');
+            rightColumn.className = 'right-column';
+
+            const propertiesTitle = document.createElement('div');
+            propertiesTitle.className = 'properties-title';
+            propertiesTitle.textContent = 'Properties Window';
+            rightColumn.appendChild(propertiesTitle);
+
+            const propertiesWindow = document.createElement('div');
+            propertiesWindow.className = 'properties-window';
+            rightColumn.appendChild(propertiesWindow);
+
+            const saveDeploy = document.createElement('div');
+            saveDeploy.className = 'save-deploy';
+            const saveDeployTitle = document.createElement('div');
+            saveDeployTitle.className = 'save-deploy-title';
+            saveDeployTitle.textContent = 'Save & Deploy Button';
+            saveDeploy.appendChild(saveDeployTitle);
+
+            const saveButton = document.createElement('div');
+            saveButton.className = 'save-button';
+            saveButton.innerHTML = '<span class="check-icon">✓</span><span class="save-text">Everything looks good!</span>';
+            saveDeploy.appendChild(saveButton);
+            rightColumn.appendChild(saveDeploy);
+            mainContent.appendChild(rightColumn);
+
+            app.appendChild(mainContent);
+        });
+    </script>
+</body>
+</html>
