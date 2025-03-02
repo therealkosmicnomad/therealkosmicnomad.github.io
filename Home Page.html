@@ -130,7 +130,6 @@
             margin-top: 20px;
             border-radius: 8px;
         }
-        /* Removed .display-types:hover to prevent highlight */
         .display-types-inner {
             display: flex;
             flex-direction: column;
@@ -172,7 +171,6 @@
             margin-top: 20px;
             border-radius: 8px;
         }
-        /* Removed .content-selector:hover to prevent highlight */
         .content-selector-inner {
             display: flex;
             flex-direction: column;
@@ -332,6 +330,47 @@
                 item.className = 'menu-item';
                 item.textContent = itemText;
                 menuBar.appendChild(item);
+
+                // Add event listener for ABOUT button
+                if (itemText === 'ABOUT') {
+                    item.addEventListener('click', function() {
+                        const aboutPrompt = document.createElement('div');
+                        aboutPrompt.style.position = 'fixed';
+                        aboutPrompt.style.top = '50%';
+                        aboutPrompt.style.left = '50%';
+                        aboutPrompt.style.transform = 'translate(-50%, -50%)';
+                        aboutPrompt.style.width = '300px'; // Adjusted for text readability
+                        aboutPrompt.style.height = 'auto'; // Adjusted for text content
+                        aboutPrompt.style.backgroundColor = 'var(--menu-bg)';
+                        aboutPrompt.style.borderRadius = '8px';
+                        aboutPrompt.style.padding = '15px';
+                        aboutPrompt.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
+                        aboutPrompt.style.zIndex = '1000';
+                        aboutPrompt.style.textAlign = 'center';
+
+                        const promptText = document.createElement('p');
+                        promptText.textContent = "Launch Pad is the passion project of yours truly, Michael Van Nguyen. With over 6+ years in the world of digital signage - Michael believes he can use A.I. to truly innovate this space and take it to the next level! LETS GO FAM!!!!!!";
+                        promptText.style.fontSize = '14px';
+                        promptText.style.color = 'var(--text-color)';
+                        aboutPrompt.appendChild(promptText);
+
+                        const exitButton = document.createElement('button');
+                        exitButton.textContent = 'Exit';
+                        exitButton.style.marginTop = '10px';
+                        exitButton.style.padding = '5px 10px';
+                        exitButton.style.backgroundColor = '#3498db';
+                        exitButton.style.color = '#fff';
+                        exitButton.style.border = 'none';
+                        exitButton.style.borderRadius = '4px';
+                        exitButton.style.cursor = 'pointer';
+                        exitButton.addEventListener('click', function() {
+                            document.body.removeChild(aboutPrompt);
+                        });
+                        aboutPrompt.appendChild(exitButton);
+
+                        document.body.appendChild(aboutPrompt);
+                    });
+                }
             });
             app.appendChild(menuBar);
 
