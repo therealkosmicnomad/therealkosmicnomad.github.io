@@ -108,7 +108,7 @@
             flex-direction: column;
             width: 170px;
             margin-right: 10px;
-            align-items: center; /* Added to center child elements */
+            align-items: center;
         }
         .sidebar-title {
             font-size: 12px;
@@ -121,12 +121,13 @@
             background-color: #eee;
             padding: 10px;
             margin-bottom: 20px;
-            height: 150px;
-            width: 80px;
+            height: 300px; /* Doubled from 150px */
+            width: 160px; /* Doubled from 80px */
             display: flex;
             flex-direction: column;
             align-items: center;
             transition: background-color 0.3s ease;
+            margin-top: 20px; /* Moved down 20px */
         }
         .display-types:hover {
             background-color: #f0f0f0;
@@ -139,8 +140,8 @@
             width: 40px;
         }
         .display-icon {
-            width: 40px;
-            height: 40px;
+            width: 80px; /* Doubled from 40px */
+            height: 80px; /* Doubled from 40px */
             background-color: #fff;
             border: 1px solid var(--border-color);
             display: flex;
@@ -162,12 +163,13 @@
             border: 1px solid var(--border-color);
             background-color: #eee;
             padding: 10px;
-            height: 150px;
-            width: 80px;
+            height: 300px; /* Doubled from 150px */
+            width: 160px; /* Doubled from 80px */
             display: flex;
             flex-direction: column;
             align-items: center;
             transition: background-color 0.3s ease;
+            margin-top: 20px; /* Moved down 20px */
         }
         .content-selector:hover {
             background-color: #f0f0f0;
@@ -178,18 +180,18 @@
             justify-content: space-between;
             height: 100%;
             width: 60px;
-            align-items: center; /* Added to center content icons */
+            align-items: center;
         }
         .content-icon {
-            width: 40px;
-            height: 40px;
+            width: 80px; /* Doubled from 40px */
+            height: 80px; /* Doubled from 40px */
             background-color: #fff;
             border: 1px solid var(--border-color);
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            font-size: 20px;
+            font-size: 40px; /* Doubled from 20px */
             transition: transform 0.3s ease, background-color 0.3s ease;
         }
         .content-icon:hover {
@@ -201,8 +203,8 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 300px;
-            height: 300px;
+            width: 600px; /* Doubled from 300px */
+            height: 600px; /* Doubled from 300px */
             background-color: var(--test-window-bg);
             border: 1px solid var(--container-border);
         }
@@ -271,7 +273,7 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
-        .test-window-title { /* Added for Test Window title */
+        .test-window-title {
             position: absolute;
             top: -20px;
             left: 50%;
@@ -300,7 +302,7 @@
             header.className = 'header';
             const titleImage = document.createElement('img');
             titleImage.className = 'title-image';
-            titleImage.src = 'https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/logo%20idea.png';
+            titleImage.src = 'https://github.com/therealkosmicnomad/therealkosmicnomad.github.io/blob/main/UI%20Assets/logo%20idea.png';
             titleImage.alt = 'Launch Pad Logo';
             header.appendChild(titleImage);
 
@@ -389,9 +391,9 @@
             leftColumn.appendChild(contentSelector);
             mainContent.appendChild(leftColumn);
 
-            const testWindowContainer = document.createElement('div'); // Added container for title and window
+            const testWindowContainer = document.createElement('div');
             testWindowContainer.style.position = 'relative';
-            const testWindowTitle = document.createElement('div'); // Added title
+            const testWindowTitle = document.createElement('div');
             testWindowTitle.className = 'test-window-title';
             testWindowTitle.textContent = 'Test Window';
             testWindowContainer.appendChild(testWindowTitle);
