@@ -118,7 +118,7 @@
         }
         .display-types {
             border: 1px solid var(--border-color);
-            background-color: #eee;
+            background-color: lightblue; /* Changed from #eee to lightblue */
             padding: 10px;
             margin-bottom: 20px;
             height: 300px;
@@ -128,6 +128,7 @@
             align-items: center;
             transition: background-color 0.3s ease;
             margin-top: 20px;
+            border-radius: 8px; /* Added rounded corners */
         }
         .display-types:hover {
             background-color: #f0f0f0;
@@ -162,7 +163,7 @@
         }
         .content-selector {
             border: 1px solid var(--border-color);
-            background-color: #eee;
+            background-color: lightblue; /* Changed from #eee to lightblue */
             padding: 10px;
             height: 300px;
             width: 160px;
@@ -171,6 +172,7 @@
             align-items: center;
             transition: background-color 0.3s ease;
             margin-top: 20px;
+            border-radius: 8px; /* Added rounded corners */
         }
         .content-selector:hover {
             background-color: #f0f0f0;
@@ -186,8 +188,8 @@
         .content-icon {
             width: 80px;
             height: 80px;
-            background-color: #fff;
-            border: 1px solid var(--border-color);
+            background-color: transparent; /* Changed to remove box */
+            border: none; /* Changed to remove box */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -204,8 +206,8 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 600px; /* Default width */
-            height: 600px; /* Default height */
+            width: 600px;
+            height: 600px;
             background-color: var(--test-window-bg);
             border: 1px solid var(--container-border);
         }
@@ -369,16 +371,15 @@
                 }
                 displayInner.appendChild(div);
 
-                // Add click event listeners for Test Window resizing
                 div.addEventListener('click', function() {
                     const testWindow = document.querySelector('.test-window');
-                    if (index === 0) { // Vertical Display (first option)
+                    if (index === 0) {
                         testWindow.style.width = '300px';
                         testWindow.style.height = '600px';
-                    } else if (index === 1) { // Horizontal Display (second option)
+                    } else if (index === 1) {
                         testWindow.style.width = '600px';
                         testWindow.style.height = '400px';
-                    } else if (index === 2) { // Tablet Display (third option)
+                    } else if (index === 2) {
                         testWindow.style.width = '300px';
                         testWindow.style.height = '300px';
                     }
