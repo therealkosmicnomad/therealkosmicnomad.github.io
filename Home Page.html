@@ -112,7 +112,7 @@
         }
         .sidebar-title {
             font-size: 12px;
-            margin-bottom: 2px; /* Changed from 10px to 2px to lower text */
+            margin-bottom: 2px;
             color: var(--text-color);
             text-align: center;
         }
@@ -303,7 +303,7 @@
             header.className = 'header';
             const titleImage = document.createElement('img');
             titleImage.className = 'title-image';
-            titleImage.src = 'https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/logo%20idea.png'; // Changed to raw URL
+            titleImage.src = 'https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/logo%20idea.png';
             titleImage.alt = 'Launch Pad Logo';
             header.appendChild(titleImage);
 
@@ -318,10 +318,8 @@
 
                 if (btnText === '✕') {
                     btn.addEventListener('click', function() {
-                        const confirmExit = confirm('You are about to exit from Launch Pad. Are you sure you wish to continue?');
-                        if (confirmExit) {
-                            window.location.href = 'https://therealkosmicnomad.github.io/';
-                        }
+                        localStorage.setItem('isAuthenticated', 'false'); // Changed to invalidate authentication
+                        window.location.href = 'https://therealkosmicnomad.github.io/';
                     });
                 }
             });
@@ -445,7 +443,6 @@
 
             // Add event listener for save button
             saveButton.addEventListener('click', function() {
-                // Create prompt container
                 const promptContainer = document.createElement('div');
                 promptContainer.style.position = 'fixed';
                 promptContainer.style.top = '50%';
@@ -457,19 +454,16 @@
                 promptContainer.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
                 promptContainer.style.zIndex = '1000';
 
-                // Prompt text
                 const promptText = document.createElement('p');
                 promptText.textContent = "Nice project! If you're ready to push this content out to your digital sign, please assign a custom Launch Token to bundle this content and deploy it out.";
                 promptText.style.marginBottom = '20px';
                 promptContainer.appendChild(promptText);
 
-                // Input boxes container
                 const inputContainer = document.createElement('div');
                 inputContainer.style.display = 'flex';
                 inputContainer.style.gap = '5px';
                 promptContainer.appendChild(inputContainer);
 
-                // Create 7 input boxes
                 const inputs = [];
                 for (let i = 0; i < 7; i++) {
                     const input = document.createElement('input');
@@ -482,7 +476,6 @@
                     input.style.backgroundColor = 'white';
                     input.style.border = '1px solid #ccc';
                     input.style.borderRadius = '4px';
-                    // Restrict to letters and numbers
                     input.addEventListener('input', (e) => {
                         e.target.value = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
                         if (e.target.value && i < 6) inputs[i + 1].focus();
@@ -492,23 +485,20 @@
                     inputContainer.appendChild(input);
                 }
 
-                // Green checkmark
                 const checkmark = document.createElement('span');
                 checkmark.textContent = '✓';
                 checkmark.style.color = 'green';
                 checkmark.style.fontSize = '24px';
                 checkmark.style.marginLeft = '20px';
                 checkmark.style.cursor = 'pointer';
-                checkmark.style.display = 'none'; // Hidden initially
+                checkmark.style.display = 'none';
                 promptContainer.appendChild(checkmark);
 
-                // Function to check if all inputs are filled
                 function checkAllFilled() {
                     const allFilled = inputs.every(input => input.value.length === 1);
                     checkmark.style.display = allFilled ? 'inline' : 'none';
                 }
 
-                // Handle checkmark click
                 checkmark.addEventListener('click', () => {
                     const launchToken = inputs.map(input => input.value).join('');
                     const tokenDisplay = document.createElement('p');
@@ -517,10 +507,7 @@
                     document.body.removeChild(promptContainer);
                 });
 
-                // Append prompt to body
                 document.body.appendChild(promptContainer);
-
-                // Focus first input
                 inputs[0].focus();
             });
         });
