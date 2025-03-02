@@ -10,10 +10,7 @@
             --border-color: #888;
             --test-window-bg: #000;
             --container-border: #ffff00;
-            --button-bg: #3498db;
-            --button-hover-bg: #2980b9;
             --text-color: #2c3e50;
-            --highlight-color: #e74c3c;
             --secondary-highlight: #f1c40f;
         }
         * {
@@ -21,9 +18,6 @@
             padding: 0;
             box-sizing: border-box;
             font-family: Arial, sans-serif;
-        }
-        html {
-            scroll-behavior: smooth;
         }
         body {
             min-height: 100vh;
@@ -34,9 +28,6 @@
             background-size: cover;
             min-height: 100vh;
             padding: 20px;
-            display: flex;
-            flex-direction: column;
-            animation: fadeIn 1s ease-in-out;
             position: relative;
         }
         .header {
@@ -76,7 +67,7 @@
             background-color: #f0f0f0;
             transform: scale(1.1);
         }
-        .wrench-button.activated {
+        .admin-button.activated {
             background-color: green;
         }
         .menu-bar {
@@ -129,7 +120,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: background-color 0.3s ease;
             margin-top: 20px;
             border-radius: 8px;
         }
@@ -150,16 +140,12 @@
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            transition: transform 0.3s ease, background-color 0.3s ease;
+            transition: transform 0.3s ease;
         }
         .display-icon img {
             width: 100%;
             height: 100%;
             object-fit: contain;
-        }
-        .display-icon:hover {
-            transform: scale(1.1);
-            background-color: var(--secondary-highlight);
         }
         .content-selector {
             border: 1px solid var(--border-color);
@@ -170,7 +156,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: background-color 0.3s ease;
             margin-top: 20px;
             border-radius: 8px;
         }
@@ -192,11 +177,7 @@
             align-items: center;
             cursor: pointer;
             font-size: 40px;
-            transition: transform 0.3s ease, background-color 0.3s ease;
-        }
-        .content-icon:hover {
-            transform: scale(1.1);
-            background-color: var(--secondary-highlight);
+            transition: transform 0.3s ease;
         }
         .test-window {
             position: absolute;
@@ -226,10 +207,6 @@
             margin-bottom: 20px;
             overflow: auto;
             padding: 10px;
-            transition: background-color 0.3s ease;
-        }
-        .properties-window:hover {
-            background-color: #f0f0f0;
         }
         .save-deploy {
             margin-top: auto;
@@ -248,11 +225,7 @@
             display: inline-flex;
             align-items: center;
             padding: 0 10px;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-        .save-button:hover {
-            background-color: #f0f0f0;
-            transform: scale(1.1);
+            transition: transform 0.2s ease;
         }
         .check-icon {
             color: #4caf50;
@@ -266,13 +239,6 @@
             text-align: center;
             color: var(--text-color);
         }
-        .fade-in {
-            animation: fadeIn 0.5s ease;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
         .test-window-title {
             position: absolute;
             top: -20px;
@@ -282,12 +248,23 @@
             color: var(--text-color);
             text-align: center;
         }
+        /* Admin mode styles */
+        .admin-mode .draggable:hover {
+            outline: 2px solid blue;
+        }
+        /* Disable highlights in admin mode */
+        .admin-mode .display-icon:hover,
+        .admin-mode .content-icon:hover,
+        .admin-mode .menu-item:hover,
+        .admin-mode .save-button:hover {
+            background-color: inherit;
+            transform: none;
+        }
     </style>
 </head>
 <body>
     <script>
-        // Check authentication status on page load
-        console.log('Checking authentication:', localStorage.getItem('isAuthenticated'));
+        // Authentication check
         if (localStorage.getItem('isAuthenticated') !== 'true') {
             window.location.href = 'https://therealkosmicnomad.github.io/';
         }
@@ -298,60 +275,13 @@
             const app = document.getElementById('app');
             app.className = 'launch-pad';
 
-            // Create reticle
-            const reticle = document.createElement('div');
-            reticle.className = 'reticle';
-            reticle.style.position = 'absolute';
-            reticle.style.width = '10px';
-            reticle.style.height = '10px';
-            reticle.style.borderRadius = '50%';
-            reticle.style.backgroundColor = 'red';
-            reticle.style.pointerEvents = 'none';
-            reticle.style.display = 'none';
-            reticle.style.zIndex = '1000';
-            document.body.appendChild(reticle);
+            let adminMode = false;
+            let isDragging = false;
+            let currentElement = null;
+            let dragOffsetX = 0;
+            let dragOffsetY = 0;
 
-            // Create position display
-            const positionDisplay = document.createElement('div');
-            positionDisplay.className = 'position-display';
-            positionDisplay.style.position = 'absolute';
-            positionDisplay.style.backgroundColor = 'white';
-            positionDisplay.style.padding = '5px';
-            positionDisplay.style.border = '1px solid black';
-            positionDisplay.style.pointerEvents = 'none';
-            positionDisplay.style.display = 'none';
-            positionDisplay.style.zIndex = '1000';
-            document.body.appendChild(positionDisplay);
-
-            // Create informational popup
-            const infoPopup = document.createElement('div');
-            infoPopup.className = 'info-popup';
-            infoPopup.style.position = 'fixed';
-            infoPopup.style.backgroundColor = 'white';
-            infoPopup.style.padding = '10px';
-            infoPopup.style.border = '1px solid black';
-            infoPopup.style.display = 'none';
-            infoPopup.style.zIndex = '1000';
-            infoPopup.textContent = 'This button activates an on-screen reticle that will allow you to move your mouse around and instantly be able to see your position on the page.';
-            document.body.appendChild(infoPopup);
-
-            // Add mousemove listener for reticle and position display
-            document.addEventListener('mousemove', function(event) {
-                const wrenchButton = document.querySelector('.wrench-button');
-                if (wrenchButton && wrenchButton.classList.contains('activated')) {
-                    reticle.style.display = 'block';
-                    positionDisplay.style.display = 'block';
-                    reticle.style.left = `${event.pageX - 5}px`;
-                    reticle.style.top = `${event.pageY - 5}px`;
-                    positionDisplay.style.left = `${event.pageX + 10}px`;
-                    positionDisplay.style.top = `${event.pageY + 10}px`;
-                    positionDisplay.textContent = `X: ${event.pageX}, Y: ${event.pageY}`;
-                } else {
-                    reticle.style.display = 'none';
-                    positionDisplay.style.display = 'none';
-                }
-            });
-
+            // Header and window controls
             const header = document.createElement('div');
             header.className = 'header';
             const titleImage = document.createElement('img');
@@ -362,34 +292,23 @@
 
             const windowControls = document.createElement('div');
             windowControls.className = 'window-controls';
-            const buttons = ['🔧', '✕'];
+            const buttons = ['👤', '✕'];
             buttons.forEach(btnText => {
                 const btn = document.createElement('div');
                 btn.className = 'window-button';
-                if (btnText === '🔧') {
-                    btn.classList.add('wrench-button');
+                if (btnText === '👤') {
+                    btn.classList.add('admin-button');
                 }
                 btn.textContent = btnText;
                 windowControls.appendChild(btn);
 
-                if (btnText === '🔧') {
-                    let timeoutId;
-                    btn.addEventListener('mouseenter', function() {
-                        timeoutId = setTimeout(function() {
-                            const rect = btn.getBoundingClientRect();
-                            infoPopup.style.top = `${rect.bottom}px`;
-                            infoPopup.style.left = `${rect.left}px`;
-                            infoPopup.style.display = 'block';
-                        }, 3000);
-                    });
-                    btn.addEventListener('mouseleave', function() {
-                        clearTimeout(timeoutId);
-                        infoPopup.style.display = 'none';
-                    });
+                if (btnText === '👤') {
                     btn.addEventListener('click', function() {
-                        if (btn.classList.contains('activated')) {
+                        if (adminMode) {
+                            disableAdminMode();
                             btn.classList.remove('activated');
                         } else {
+                            enableAdminMode();
                             btn.classList.add('activated');
                         }
                     });
@@ -403,6 +322,7 @@
             header.appendChild(windowControls);
             app.appendChild(header);
 
+            // Menu bar
             const menuBar = document.createElement('div');
             menuBar.className = 'menu-bar';
             const menuItems = ['FILE', 'VIEW', 'OPTIONS', 'TOOLS', 'HELP', 'ABOUT'];
@@ -411,49 +331,10 @@
                 item.className = 'menu-item';
                 item.textContent = itemText;
                 menuBar.appendChild(item);
-
-                if (itemText === 'ABOUT') {
-                    item.addEventListener('click', function() {
-                        const aboutPrompt = document.createElement('div');
-                        aboutPrompt.style.position = 'fixed';
-                        aboutPrompt.style.top = '50%';
-                        aboutPrompt.style.left = '50%';
-                        aboutPrompt.style.transform = 'translate(-50%, -50%)';
-                        aboutPrompt.style.width = '300px';
-                        aboutPrompt.style.height = 'auto';
-                        aboutPrompt.style.backgroundColor = 'var(--menu-bg)';
-                        aboutPrompt.style.borderRadius = '8px';
-                        aboutPrompt.style.padding = '15px';
-                        aboutPrompt.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
-                        aboutPrompt.style.zIndex = '1000';
-                        aboutPrompt.style.textAlign = 'center';
-
-                        const promptText = document.createElement('p');
-                        promptText.textContent = "Launch Pad is the passion project of yours truly, Michael Van Nguyen. With over 6+ years in the world of digital signage - Michael believes he can use A.I. to truly innovate this space and take it to the next level! LETS GO FAM!!!!!!";
-                        promptText.style.fontSize = '14px';
-                        promptText.style.color = 'var(--text-color)';
-                        aboutPrompt.appendChild(promptText);
-
-                        const exitButton = document.createElement('button');
-                        exitButton.textContent = 'Exit';
-                        exitButton.style.marginTop = '10px';
-                        exitButton.style.padding = '5px 10px';
-                        exitButton.style.backgroundColor = '#3498db';
-                        exitButton.style.color = '#fff';
-                        exitButton.style.border = 'none';
-                        exitButton.style.borderRadius = '4px';
-                        exitButton.style.cursor = 'pointer';
-                        exitButton.addEventListener('click', function() {
-                            document.body.removeChild(aboutPrompt);
-                        });
-                        aboutPrompt.appendChild(exitButton);
-
-                        document.body.appendChild(aboutPrompt);
-                    });
-                }
             });
             app.appendChild(menuBar);
 
+            // Main content
             const mainContent = document.createElement('div');
             mainContent.className = 'main-content';
 
@@ -463,10 +344,12 @@
             const displayTitle = document.createElement('div');
             displayTitle.className = 'sidebar-title';
             displayTitle.textContent = 'Display Type';
-            leftColumn.appendChild(displayTitle); // Reverted to original position
+            leftColumn.appendChild(displayTitle);
 
             const displayTypes = document.createElement('div');
             displayTypes.className = 'display-types';
+            displayTypes.id = 'display-types';
+            displayTypes.classList.add('draggable');
             const displayInner = document.createElement('div');
             displayInner.className = 'display-types-inner';
             const displayIcons = [
@@ -478,15 +361,14 @@
                 const div = document.createElement('div');
                 div.className = 'display-icon';
                 div.id = icon.id;
-                if (icon.src) {
-                    const img = document.createElement('img');
-                    img.src = icon.src;
-                    img.alt = 'Display Icon';
-                    div.appendChild(img);
-                }
+                const img = document.createElement('img');
+                img.src = icon.src;
+                img.alt = 'Display Icon';
+                div.appendChild(img);
                 displayInner.appendChild(div);
 
                 div.addEventListener('click', function() {
+                    if (adminMode) return;
                     const testWindow = document.querySelector('.test-window');
                     if (index === 0) {
                         testWindow.style.width = '300px';
@@ -506,10 +388,12 @@
             const contentTitle = document.createElement('div');
             contentTitle.className = 'sidebar-title';
             contentTitle.textContent = 'Content Selector';
-            leftColumn.appendChild(contentTitle); // Reverted to original position
+            leftColumn.appendChild(contentTitle);
 
             const contentSelector = document.createElement('div');
             contentSelector.className = 'content-selector';
+            contentSelector.id = 'content-selector';
+            contentSelector.classList.add('draggable');
             const contentInner = document.createElement('div');
             contentInner.className = 'content-selector-inner';
             const contentIcons = [
@@ -529,6 +413,8 @@
             mainContent.appendChild(leftColumn);
 
             const testWindowContainer = document.createElement('div');
+            testWindowContainer.id = 'test-window-container';
+            testWindowContainer.classList.add('draggable');
             testWindowContainer.style.position = 'absolute';
             testWindowContainer.style.top = '50%';
             testWindowContainer.style.left = '50%';
@@ -552,10 +438,14 @@
 
             const propertiesWindow = document.createElement('div');
             propertiesWindow.className = 'properties-window';
+            propertiesWindow.id = 'properties-window';
+            propertiesWindow.classList.add('draggable');
             rightColumn.appendChild(propertiesWindow);
 
             const saveDeploy = document.createElement('div');
             saveDeploy.className = 'save-deploy';
+            saveDeploy.id = 'save-deploy';
+            saveDeploy.classList.add('draggable');
             const saveDeployTitle = document.createElement('div');
             saveDeployTitle.className = 'save-deploy-title';
             saveDeployTitle.textContent = 'Save & Deploy Button';
@@ -570,7 +460,113 @@
 
             app.appendChild(mainContent);
 
+            // Define draggable elements
+            const draggableElements = [displayTypes, contentSelector, testWindowContainer, propertiesWindow, saveDeploy];
+
+            // Admin mode functions
+            function enableAdminMode() {
+                adminMode = true;
+                document.body.classList.add('admin-mode');
+                const appRect = app.getBoundingClientRect();
+                draggableElements.forEach(element => {
+                    const elementRect = element.getBoundingClientRect();
+                    element.style.position = 'absolute';
+                    element.style.left = `${elementRect.left - appRect.left}px`;
+                    element.style.top = `${elementRect.top - appRect.top}px`;
+                    element.addEventListener('mousedown', startDrag);
+                });
+                document.addEventListener('mousemove', drag);
+                document.addEventListener('mouseup', endDrag);
+            }
+
+            function disableAdminMode() {
+                adminMode = false;
+                document.body.classList.remove('admin-mode');
+                draggableElements.forEach(element => {
+                    element.removeEventListener('mousedown', startDrag);
+                });
+                document.removeEventListener('mousemove', drag);
+                document.removeEventListener('mouseup', endDrag);
+                showUpdatedPositions();
+            }
+
+            function startDrag(event) {
+                if (!adminMode) return;
+                currentElement = event.currentTarget;
+                const rect = currentElement.getBoundingClientRect();
+                dragOffsetX = event.pageX - rect.left;
+                dragOffsetY = event.pageY - rect.top;
+                isDragging = true;
+                event.preventDefault(); // Prevent text selection during drag
+            }
+
+            function drag(event) {
+                if (!isDragging) return;
+                const appRect = app.getBoundingClientRect();
+                const newLeft = event.pageX - appRect.left - dragOffsetX;
+                const newTop = event.pageY - appRect.top - dragOffsetY;
+                currentElement.style.left = `${newLeft}px`;
+                currentElement.style.top = `${newTop}px`;
+            }
+
+            function endDrag() {
+                isDragging = false;
+                currentElement = null;
+            }
+
+            function showUpdatedPositions() {
+                const prompt = document.createElement('div');
+                prompt.style.position = 'fixed';
+                prompt.style.top = '50%';
+                prompt.style.left = '50%';
+                prompt.style.transform = 'translate(-50%, -50%)';
+                prompt.style.backgroundColor = 'var(--menu-bg)';
+                prompt.style.padding = '20px';
+                prompt.style.borderRadius = '8px';
+                prompt.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
+                prompt.style.zIndex = '1000';
+                prompt.style.maxWidth = '80%';
+                prompt.style.maxHeight = '80%';
+                prompt.style.overflow = 'auto';
+
+                const title = document.createElement('h2');
+                title.textContent = 'Updated Positions';
+                prompt.appendChild(title);
+
+                const closeButton = document.createElement('button');
+                closeButton.textContent = 'X';
+                closeButton.style.position = 'absolute';
+                closeButton.style.top = '5px';
+                closeButton.style.right = '5px';
+                closeButton.style.background = 'none';
+                closeButton.style.border = 'none';
+                closeButton.style.fontSize = '16px';
+                closeButton.style.cursor = 'pointer';
+                closeButton.addEventListener('click', function() {
+                    document.body.removeChild(prompt);
+                });
+                prompt.appendChild(closeButton);
+
+                const code = document.createElement('pre');
+                code.style.whiteSpace = 'pre-wrap';
+                code.style.fontFamily = 'monospace';
+                code.textContent = draggableElements.map(el => {
+                    const style = el.style;
+                    return `#${el.id} {\n    position: absolute;\n    left: ${style.left};\n    top: ${style.top};\n}`;
+                }).join('\n\n');
+                prompt.appendChild(code);
+
+                document.body.appendChild(prompt);
+            }
+
+            // Attach drag listeners to draggable elements
+            draggableElements.forEach(element => {
+                element.addEventListener('mousedown', startDrag);
+            });
+
+            // Save button functionality
             saveButton.addEventListener('click', function() {
+                if (adminMode) return;
                 const promptContainer = document.createElement('div');
                 promptContainer.style.position = 'fixed';
                 promptContainer.style.top = '50%';
@@ -583,7 +579,7 @@
                 promptContainer.style.zIndex = '1000';
 
                 const promptText = document.createElement('p');
-                promptText.textContent = "Nice project! If you're ready to push this content out to your digital sign, please assign a custom Launch Token to bundle this content and deploy it out.";
+                promptText.textContent = "Nice project! If you're ready to push this content out to your digital sign, please assign a custom Launch Token.";
                 promptText.style.marginBottom = '20px';
                 promptContainer.appendChild(promptText);
 
@@ -601,42 +597,10 @@
                     input.style.height = '30px';
                     input.style.textAlign = 'center';
                     input.style.fontSize = '16px';
-                    input.style.backgroundColor = 'white';
-                    input.style.border = '1px solid #ccc';
-                    input.style.borderRadius = '4px';
-                    input.addEventListener('input', (e) => {
-                        e.target.value = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
-                        if (e.target.value && i < 6) inputs[i + 1].focus();
-                        checkAllFilled();
-                    });
                     inputs.push(input);
                     inputContainer.appendChild(input);
                 }
-
-                const checkmark = document.createElement('span');
-                checkmark.textContent = '✓';
-                checkmark.style.color = 'green';
-                checkmark.style.fontSize = '24px';
-                checkmark.style.marginLeft = '20px';
-                checkmark.style.cursor = 'pointer';
-                checkmark.style.display = 'none';
-                promptContainer.appendChild(checkmark);
-
-                function checkAllFilled() {
-                    const allFilled = inputs.every(input => input.value.length === 1);
-                    checkmark.style.display = allFilled ? 'inline' : 'none';
-                }
-
-                checkmark.addEventListener('click', () => {
-                    const launchToken = inputs.map(input => input.value).join('');
-                    const tokenDisplay = document.createElement('p');
-                    tokenDisplay.textContent = `Launch Token: ${launchToken}`;
-                    propertiesWindow.appendChild(tokenDisplay);
-                    document.body.removeChild(promptContainer);
-                });
-
                 document.body.appendChild(promptContainer);
-                inputs[0].focus();
             });
         });
     </script>
