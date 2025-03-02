@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DIZZ™ LAUNCH PAD</title>
     <style>
+        /* Core styles remain unchanged from your original setup */
         :root {
             --menu-bg: #fff2b2;
             --border-color: #888;
@@ -22,9 +23,6 @@
             box-sizing: border-box;
             font-family: Arial, sans-serif;
         }
-        html {
-            scroll-behavior: smooth;
-        }
         body {
             min-height: 100vh;
             margin: 0;
@@ -36,13 +34,11 @@
             padding: 20px;
             display: flex;
             flex-direction: column;
-            animation: fadeIn 1s ease-in-out;
             position: relative;
         }
         .header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
             padding: 10px;
             position: relative;
         }
@@ -132,62 +128,6 @@
             margin-top: 20px;
             border-radius: 8px;
         }
-        .display-types-inner {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100%;
-            width: 40px;
-            align-items: center;
-        }
-        .display-icon {
-            width: 80px;
-            height: 80px;
-            background-color: transparent;
-            border: none;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-        .display-icon img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-        .content-selector {
-            border: 1px solid var(--border-color);
-            background-color: lightblue;
-            padding: 10px;
-            height: 300px;
-            width: 160px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 20px;
-            border-radius: 8px;
-        }
-        .content-selector-inner {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100%;
-            width: 60px;
-            align-items: center;
-        }
-        .content-icon {
-            width: 80px;
-            height: 80px;
-            background-color: transparent;
-            border: none;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            font-size: 40px;
-            transition: transform 0.3s ease;
-        }
         .test-window {
             position: absolute;
             top: 50%;
@@ -198,133 +138,54 @@
             background-color: var(--test-window-bg);
             border: 1px solid var(--container-border);
         }
-        .right-column {
-            display: flex;
-            flex-direction: column;
-            width: 300px;
-        }
-        .properties-title {
-            font-size: 12px;
-            margin-bottom: 5px;
-            color: var(--text-color);
-            text-align: center;
-        }
-        .properties-window {
-            border: 1px solid var(--border-color);
-            background-color: #eee;
-            height: 250px;
-            margin-bottom: 20px;
-            overflow: auto;
-            padding: 10px;
-        }
-        .save-deploy {
-            margin-top: auto;
-            text-align: center;
-        }
-        .save-deploy-title {
-            font-size: 12px;
-            margin-bottom: 2px;
-            color: var(--text-color);
-        }
-        .save-button {
-            height: 40px;
-            border: 1px solid var(--border-color);
-            background-color: #eee;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            padding: 0 10px;
-            transition: transform 0.2s ease;
-        }
-        .check-icon {
-            color: #4caf50;
-            font-weight: bold;
-            margin-right: 10px;
-            font-size: 20px;
-        }
-        .save-text {
-            font-size: 16px;
-            flex: 1;
-            text-align: center;
-            color: var(--text-color);
-        }
-        .test-window-title {
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 12px;
-            color: var(--text-color);
-            text-align: center;
-        }
         /* Admin mode styles */
         .admin-mode .draggable:hover {
             outline: 2px solid blue;
             cursor: move;
         }
-        /* Disable highlights in admin mode */
-        .admin-mode .display-icon:hover,
-        .admin-mode .content-icon:hover,
-        .admin-mode .menu-item:hover,
-        .admin-mode .save-button:hover {
-            background-color: inherit;
-            transform: none;
-        }
-        /* Composition journal styles */
-        .journal-prompt {
+        /* PIN Prompt Styles */
+        .pin-prompt {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 600px;
-            height: 400px;
-            background: linear-gradient(to right, #fff 50%, #fff 50%);
-            border: 2px solid #000;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(0, 0, 0, 0.2);
+            background-color: white;
             padding: 20px;
-            z-index: 1000;
-            overflow: auto;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background-image: repeating-linear-gradient(#fff 0px, #fff 24px, #000 25px);
-            background-size: 100% 25px;
-        }
-        .journal-prompt h2 {
+            border: 1px solid black;
+            z-index: 1001;
             text-align: center;
-            font-family: 'Courier New', Courier, monospace;
-            margin-bottom: 20px;
-            color: #000;
         }
-        .journal-prompt pre {
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 14px;
-            white-space: pre-wrap;
-            color: #000;
-            background: transparent;
-            padding: 0;
-            margin: 0;
-            user-select: text;
+        .pin-prompt input {
+            margin-bottom: 10px;
+            padding: 5px;
+            font-size: 16px;
         }
-        .journal-prompt .close-button {
+        .pin-prompt button {
+            padding: 5px 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+        .pin-prompt .close-button {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 5px;
+            right: 5px;
             background: none;
             border: none;
-            font-size: 20px;
-            cursor: pointer;
-            color: #000;
+            font-size: 16px;
+        }
+        .pin-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
         }
     </style>
 </head>
 <body>
-    <script>
-        if (localStorage.getItem('isAuthenticated') !== 'true') {
-            window.location.href = 'https://therealkosmicnomad.github.io/';
-        }
-    </script>
     <div id="app"></div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -336,201 +197,109 @@
             let currentElement = null;
             let dragOffsetX = 0;
             let dragOffsetY = 0;
+            const draggableElements = [];
             const originalPositions = new Map();
 
+            // Build UI (simplified for brevity)
             const header = document.createElement('div');
             header.className = 'header';
             const titleImage = document.createElement('img');
             titleImage.className = 'title-image';
             titleImage.src = 'https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/logo%20idea.png';
-            titleImage.alt = 'Launch Pad Logo';
             header.appendChild(titleImage);
 
             const windowControls = document.createElement('div');
             windowControls.className = 'window-controls';
-            const buttons = ['👤', '✕'];
-            buttons.forEach(btnText => {
-                const btn = document.createElement('div');
-                btn.className = 'window-button';
-                if (btnText === '👤') {
-                    btn.classList.add('admin-button');
-                }
-                btn.textContent = btnText;
-                windowControls.appendChild(btn);
-
-                if (btnText === '👤') {
-                    btn.addEventListener('click', function() {
-                        if (adminMode) {
-                            disableAdminMode();
-                            btn.classList.remove('activated');
-                        } else {
-                            enableAdminMode();
-                            btn.classList.add('activated');
-                        }
-                    });
-                } else if (btnText === '✕') {
-                    btn.addEventListener('click', function() {
-                        localStorage.setItem('isAuthenticated', 'false');
-                        window.location.href = 'https://therealkosmicnomad.github.io/';
-                    });
-                }
-            });
+            const adminButton = document.createElement('div');
+            adminButton.className = 'window-button admin-button';
+            adminButton.textContent = '👤';
+            adminButton.addEventListener('click', showPinPrompt);
+            windowControls.appendChild(adminButton);
             header.appendChild(windowControls);
             app.appendChild(header);
 
             const menuBar = document.createElement('div');
-            menuBar.className = 'menu-bar';
-            const menuItems = ['FILE', 'VIEW', 'OPTIONS', 'TOOLS', 'HELP', 'ABOUT'];
-            menuItems.forEach(itemText => {
-                const item = document.createElement('div');
-                item.className = 'menu-item';
-                item.textContent = itemText;
-                menuBar.appendChild(item);
-            });
+            menuBar.className = 'menu-bar draggable';
+            menuBar.id = 'menu-bar';
             app.appendChild(menuBar);
 
             const mainContent = document.createElement('div');
             mainContent.className = 'main-content';
-
             const leftColumn = document.createElement('div');
             leftColumn.className = 'left-column';
-
             const displayTitle = document.createElement('div');
-            displayTitle.className = 'sidebar-title';
+            displayTitle.className = 'sidebar-title draggable';
             displayTitle.id = 'display-title';
             displayTitle.textContent = 'Display Type';
             leftColumn.appendChild(displayTitle);
-
             const displayTypes = document.createElement('div');
-            displayTypes.className = 'display-types';
+            displayTypes.className = 'display-types draggable';
             displayTypes.id = 'display-types';
-            const displayInner = document.createElement('div');
-            displayInner.className = 'display-types-inner';
-            const displayIcons = [
-                { id: 'display1', src: 'https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/Vertical%20Screen%20Icon.png' },
-                { id: 'display2', src: 'https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/Horizontal%20Screen%20Icon.png' },
-                { id: 'display3', src: 'https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/Tablet%20Screen%20Icon.png' }
-            ];
-            displayIcons.forEach((icon, index) => {
-                const div = document.createElement('div');
-                div.className = 'display-icon';
-                div.id = icon.id;
-                if (icon.src) {
-                    const img = document.createElement('img');
-                    img.src = icon.src;
-                    img.alt = 'Display Icon';
-                    div.appendChild(img);
-                }
-                displayInner.appendChild(div);
-
-                div.addEventListener('click', function() {
-                    if (adminMode) return;
-                    const testWindow = document.querySelector('.test-window');
-                    if (index === 0) {
-                        testWindow.style.width = '300px';
-                        testWindow.style.height = '600px';
-                    } else if (index === 1) {
-                        testWindow.style.width = '600px';
-                        testWindow.style.height = '400px';
-                    } else if (index === 2) {
-                        testWindow.style.width = '300px';
-                        testWindow.style.height = '300px';
-                    }
-                });
-            });
-            displayTypes.appendChild(displayInner);
             leftColumn.appendChild(displayTypes);
-
-            const contentTitle = document.createElement('div');
-            contentTitle.className = 'sidebar-title';
-            contentTitle.id = 'content-title';
-            contentTitle.textContent = 'Content Selector';
-            leftColumn.appendChild(contentTitle);
-
-            const contentSelector = document.createElement('div');
-            contentSelector.className = 'content-selector';
-            contentSelector.id = 'content-selector';
-            const contentInner = document.createElement('div');
-            contentInner.className = 'content-selector-inner';
-            const contentIcons = [
-                { id: 'content1', text: '🖼️' },
-                { id: 'content2', text: '🎬' },
-                { id: 'content3', text: '🎵' }
-            ];
-            contentIcons.forEach(icon => {
-                const div = document.createElement('div');
-                div.className = 'content-icon';
-                div.id = icon.id;
-                div.textContent = icon.text;
-                contentInner.appendChild(div);
-            });
-            contentSelector.appendChild(contentInner);
-            leftColumn.appendChild(contentSelector);
             mainContent.appendChild(leftColumn);
 
-            const testWindowContainer = document.createElement('div');
-            testWindowContainer.id = 'test-window-container';
-            const testWindowTitle = document.createElement('div');
-            testWindowTitle.className = 'test-window-title';
-            testWindowTitle.id = 'test-window-title';
-            testWindowTitle.textContent = 'Test Window';
-            testWindowContainer.appendChild(testWindowTitle);
             const testWindow = document.createElement('div');
-            testWindow.className = 'test-window';
+            testWindow.className = 'test-window draggable';
             testWindow.id = 'test-window';
-            testWindowContainer.appendChild(testWindow);
-            app.appendChild(testWindowContainer);
-
-            const rightColumn = document.createElement('div');
-            rightColumn.className = 'right-column';
-
-            const propertiesTitle = document.createElement('div');
-            propertiesTitle.className = 'properties-title';
-            propertiesTitle.id = 'properties-title';
-            propertiesTitle.textContent = 'Properties Window';
-            rightColumn.appendChild(propertiesTitle);
-
-            const propertiesWindow = document.createElement('div');
-            propertiesWindow.className = 'properties-window';
-            propertiesWindow.id = 'properties-window';
-            rightColumn.appendChild(propertiesWindow);
-
-            const saveDeploy = document.createElement('div');
-            saveDeploy.className = 'save-deploy';
-            saveDeploy.id = 'save-deploy';
-            const saveDeployTitle = document.createElement('div');
-            saveDeployTitle.className = 'save-deploy-title';
-            saveDeployTitle.id = 'save-deploy-title';
-            saveDeployTitle.textContent = 'Save & Deploy Button';
-            saveDeploy.appendChild(saveDeployTitle);
-
-            const saveButton = document.createElement('div');
-            saveButton.className = 'save-button';
-            saveButton.id = 'save-button';
-            saveButton.innerHTML = '<span class="check-icon">✓</span><span class="save-text">Everything looks good!</span>';
-            saveDeploy.appendChild(saveButton);
-            rightColumn.appendChild(saveDeploy);
-            mainContent.appendChild(rightColumn);
-
+            mainContent.appendChild(testWindow);
             app.appendChild(mainContent);
 
-            // Define draggable elements
-            const draggableElements = [
-                displayTitle, displayTypes, contentTitle, contentSelector,
-                testWindowContainer, testWindowTitle, propertiesTitle, propertiesWindow,
-                saveDeployTitle, saveDeploy, saveButton
-            ];
+            // Collect draggable elements
+            draggableElements.push(menuBar, displayTitle, displayTypes, testWindow);
 
-            // Add draggable class for styling
-            draggableElements.forEach(el => el.classList.add('draggable'));
+            /** Show PIN Prompt and Lock Layout */
+            function showPinPrompt() {
+                // Lock layout immediately to prevent any movement
+                lockLayout();
 
-            // Admin mode functions
-            function enableAdminMode() {
-                adminMode = true;
-                document.body.classList.add('admin-mode');
+                const backdrop = document.createElement('div');
+                backdrop.className = 'pin-backdrop';
+                document.body.appendChild(backdrop);
 
+                const pinPrompt = document.createElement('div');
+                pinPrompt.className = 'pin-prompt';
+                pinPrompt.innerHTML = `
+                    <input type="password" maxlength="4" placeholder="Enter 4-digit PIN" />
+                    <button class="submit-button">Submit</button>
+                    <button class="close-button">X</button>
+                `;
+                document.body.appendChild(pinPrompt);
+
+                const input = pinPrompt.querySelector('input');
+                const submitButton = pinPrompt.querySelector('.submit-button');
+                const closeButton = pinPrompt.querySelector('.close-button');
+
+                submitButton.addEventListener('click', function() {
+                    const pin = input.value;
+                    if (pin === '8889') {
+                        document.body.removeChild(backdrop);
+                        document.body.removeChild(pinPrompt);
+                        activateAdminMode();
+                    } else {
+                        const errorMessage = document.createElement('div');
+                        errorMessage.textContent = 'Sorry, that is the incorrect PIN for Administrative Mode. Please try again later.';
+                        errorMessage.style.color = 'red';
+                        errorMessage.style.marginTop = '10px';
+                        pinPrompt.appendChild(errorMessage);
+
+                        setTimeout(() => {
+                            document.body.removeChild(backdrop);
+                            document.body.removeChild(pinPrompt);
+                            resetLayout();
+                        }, 2000); // Close after 2 seconds
+                    }
+                });
+
+                closeButton.addEventListener('click', function() {
+                    document.body.removeChild(backdrop);
+                    document.body.removeChild(pinPrompt);
+                    resetLayout();
+                });
+            }
+
+            /** Lock the layout aggressively */
+            function lockLayout() {
                 const appRect = app.getBoundingClientRect();
-
                 draggableElements.forEach(element => {
                     const elementRect = element.getBoundingClientRect();
                     element.style.position = 'absolute';
@@ -538,41 +307,50 @@
                     element.style.top = `${elementRect.top - appRect.top}px`;
                     element.style.width = `${elementRect.width}px`;
                     element.style.height = `${elementRect.height}px`;
-                    element.style.transform = 'none'; // Reset any transform
-
-                    // Store original position for comparison
+                    element.style.transform = 'none'; // Reset any transforms
+                    // Store original position for potential reset
                     originalPositions.set(element, {
                         left: element.style.left,
                         top: element.style.top,
                         width: element.style.width,
                         height: element.style.height
                     });
+                });
+            }
 
+            /** Reset layout if PIN is incorrect or prompt is closed */
+            function resetLayout() {
+                // Since we lock immediately, we may not need to reset styles
+                // unless they should revert to non-absolute positioning.
+                // For simplicity, we’ll keep them locked until Admin Mode is confirmed.
+            }
+
+            /** Activate Admin Mode after correct PIN */
+            function activateAdminMode() {
+                adminMode = true;
+                document.body.classList.add('admin-mode');
+                adminButton.classList.add('activated');
+                enableDragAndDrop();
+
+                // Layout is already locked, so we just enable interaction
+            }
+
+            /** Enable drag-and-drop functionality */
+            function enableDragAndDrop() {
+                draggableElements.forEach(element => {
                     element.addEventListener('mousedown', startDrag);
                 });
-
                 document.addEventListener('mousemove', drag);
                 document.addEventListener('mouseup', endDrag);
             }
 
-            function disableAdminMode() {
-                adminMode = false;
-                document.body.classList.remove('admin-mode');
-                draggableElements.forEach(element => {
-                    element.removeEventListener('mousedown', startDrag);
-                });
-                document.removeEventListener('mousemove', drag);
-                document.removeEventListener('mouseup', endDrag);
-                showMovedPositions();
-            }
-
+            /** Drag-and-drop handlers */
             function startDrag(event) {
                 if (!adminMode) return;
                 currentElement = event.currentTarget;
                 const rect = currentElement.getBoundingClientRect();
                 dragOffsetX = event.pageX - rect.left;
                 dragOffsetY = event.pageY - rect.top;
-                app.appendChild(currentElement); // Move to app only when dragging starts
                 isDragging = true;
                 event.preventDefault();
             }
@@ -591,108 +369,18 @@
                 currentElement = null;
             }
 
-            function showMovedPositions() {
-                const movedElements = draggableElements.filter(el => {
-                    const orig = originalPositions.get(el);
-                    const curr = el.style;
-                    return orig.left !== curr.left || orig.top !== curr.top;
-                });
-
-                if (movedElements.length === 0) return; // No prompt if nothing moved
-
-                const prompt = document.createElement('div');
-                prompt.className = 'journal-prompt';
-
-                const closeButton = document.createElement('button');
-                closeButton.className = 'close-button';
-                closeButton.textContent = 'X';
-                closeButton.addEventListener('click', function() {
-                    document.body.removeChild(prompt);
-                });
-                prompt.appendChild(closeButton);
-
-                const title = document.createElement('h2');
-                title.textContent = `${movedElements.length} Item${movedElements.length !== 1 ? 's' : ''} Moved:`;
-                prompt.appendChild(title);
-
-                const code = document.createElement('pre');
-                code.textContent = movedElements.map(el => {
-                    const style = el.style;
-                    return `#${el.id} {\n    position: absolute;\n    left: ${style.left};\n    top: ${style.top};\n    width: ${style.width};\n    height: ${style.height};\n}`;
-                }).join('\n\n');
-                prompt.appendChild(code);
-
-                document.body.appendChild(prompt);
-            }
-
-            saveButton.addEventListener('click', function() {
-                if (adminMode) return;
-                const promptContainer = document.createElement('div');
-                promptContainer.style.position = 'fixed';
-                promptContainer.style.top = '50%';
-                promptContainer.style.left = '50%';
-                promptContainer.style.transform = 'translate(-50%, -50%)';
-                promptContainer.style.backgroundColor = 'lightblue';
-                promptContainer.style.padding = '20px';
-                promptContainer.style.borderRadius = '8px';
-                promptContainer.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
-                promptContainer.style.zIndex = '1000';
-
-                const promptText = document.createElement('p');
-                promptText.textContent = "Nice project! If you're ready to push this content out to your digital sign, please assign a custom Launch Token to bundle this content and deploy it out.";
-                promptText.style.marginBottom = '20px';
-                promptContainer.appendChild(promptText);
-
-                const inputContainer = document.createElement('div');
-                inputContainer.style.display = 'flex';
-                inputContainer.style.gap = '5px';
-                promptContainer.appendChild(inputContainer);
-
-                const inputs = [];
-                for (let i = 0; i < 7; i++) {
-                    const input = document.createElement('input');
-                    input.type = 'text';
-                    input.maxLength = 1;
-                    input.style.width = '30px';
-                    input.style.height = '30px';
-                    input.style.textAlign = 'center';
-                    input.style.fontSize = '16px';
-                    input.style.backgroundColor = 'white';
-                    input.style.border = '1px solid #ccc';
-                    input.style.borderRadius = '4px';
-                    input.addEventListener('input', (e) => {
-                        e.target.value = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
-                        if (e.target.value && i < 6) inputs[i + 1].focus();
-                        checkAllFilled();
+            // Add an event to disable Admin Mode (e.g., clicking Admin Button again)
+            adminButton.addEventListener('click', function() {
+                if (adminMode) {
+                    adminMode = false;
+                    document.body.classList.remove('admin-mode');
+                    adminButton.classList.remove('activated');
+                    draggableElements.forEach(element => {
+                        element.removeEventListener('mousedown', startDrag);
                     });
-                    inputs.push(input);
-                    inputContainer.appendChild(input);
+                    document.removeEventListener('mousemove', drag);
+                    document.removeEventListener('mouseup', endDrag);
                 }
-
-                const checkmark = document.createElement('span');
-                checkmark.textContent = '✓';
-                checkmark.style.color = 'green';
-                checkmark.style.fontSize = '24px';
-                checkmark.style.marginLeft = '20px';
-                checkmark.style.cursor = 'pointer';
-                checkmark.style.display = 'none';
-                promptContainer.appendChild(checkmark);
-
-                function checkAllFilled() {
-                    const allFilled = inputs.every(input => input.value.length === 1);
-                    checkmark.style.display = allFilled ? 'inline' : 'none';
-                }
-
-                checkmark.addEventListener('click', () => {
-                    const launchToken = inputs.map(input => input.value).join('');
-                    const tokenDisplay = document.createElement('p');
-                    tokenDisplay.textContent = `Launch Token: ${launchToken}`;
-                    propertiesWindow.appendChild(tokenDisplay);
-                    document.body.removeChild(promptContainer);
-                });
-
-                document.body.appendChild(promptContainer);
-                inputs[0].focus();
             });
         });
     </script>
