@@ -143,8 +143,8 @@
         .display-icon {
             width: 80px;
             height: 80px;
-            background-color: transparent; /* Changed to remove box */
-            border: none; /* Changed to remove box */
+            background-color: transparent;
+            border: none;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -204,8 +204,8 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 600px;
-            height: 600px;
+            width: 600px; /* Default width */
+            height: 600px; /* Default height */
             background-color: var(--test-window-bg);
             border: 1px solid var(--container-border);
         }
@@ -356,8 +356,8 @@
                 { id: 'display1', src: 'https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/Vertical%20Screen%20Icon.png' },
                 { id: 'display2', src: 'https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/Horizontal%20Screen%20Icon.png' },
                 { id: 'display3', src: 'https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/Tablet%20Screen%20Icon.png' }
-            ]; // Updated options as requested
-            displayIcons.forEach(icon => {
+            ];
+            displayIcons.forEach((icon, index) => {
                 const div = document.createElement('div');
                 div.className = 'display-icon';
                 div.id = icon.id;
@@ -368,6 +368,21 @@
                     div.appendChild(img);
                 }
                 displayInner.appendChild(div);
+
+                // Add click event listeners for Test Window resizing
+                div.addEventListener('click', function() {
+                    const testWindow = document.querySelector('.test-window');
+                    if (index === 0) { // Vertical Display (first option)
+                        testWindow.style.width = '300px';
+                        testWindow.style.height = '600px';
+                    } else if (index === 1) { // Horizontal Display (second option)
+                        testWindow.style.width = '600px';
+                        testWindow.style.height = '400px';
+                    } else if (index === 2) { // Tablet Display (third option)
+                        testWindow.style.width = '300px';
+                        testWindow.style.height = '300px';
+                    }
+                });
             });
             displayTypes.appendChild(displayInner);
             leftColumn.appendChild(displayTypes);
