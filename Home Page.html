@@ -112,7 +112,7 @@
         }
         .sidebar-title {
             font-size: 12px;
-            margin-bottom: 5px;
+            margin-bottom: 10px; /* Adjusted from 5px to 10px to center above windows */
             color: var(--text-color);
             text-align: center;
         }
@@ -121,13 +121,13 @@
             background-color: #eee;
             padding: 10px;
             margin-bottom: 20px;
-            height: 300px; /* Doubled from 150px */
-            width: 160px; /* Doubled from 80px */
+            height: 300px;
+            width: 160px;
             display: flex;
             flex-direction: column;
             align-items: center;
             transition: background-color 0.3s ease;
-            margin-top: 20px; /* Moved down 20px */
+            margin-top: 20px;
         }
         .display-types:hover {
             background-color: #f0f0f0;
@@ -138,10 +138,11 @@
             justify-content: space-between;
             height: 100%;
             width: 40px;
+            align-items: center; /* Added to center selectable options */
         }
         .display-icon {
-            width: 80px; /* Doubled from 40px */
-            height: 80px; /* Doubled from 40px */
+            width: 80px;
+            height: 80px;
             background-color: #fff;
             border: 1px solid var(--border-color);
             display: flex;
@@ -163,13 +164,13 @@
             border: 1px solid var(--border-color);
             background-color: #eee;
             padding: 10px;
-            height: 300px; /* Doubled from 150px */
-            width: 160px; /* Doubled from 80px */
+            height: 300px;
+            width: 160px;
             display: flex;
             flex-direction: column;
             align-items: center;
             transition: background-color 0.3s ease;
-            margin-top: 20px; /* Moved down 20px */
+            margin-top: 20px;
         }
         .content-selector:hover {
             background-color: #f0f0f0;
@@ -183,15 +184,15 @@
             align-items: center;
         }
         .content-icon {
-            width: 80px; /* Doubled from 40px */
-            height: 80px; /* Doubled from 40px */
+            width: 80px;
+            height: 80px;
             background-color: #fff;
             border: 1px solid var(--border-color);
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            font-size: 40px; /* Doubled from 20px */
+            font-size: 40px;
             transition: transform 0.3s ease, background-color 0.3s ease;
         }
         .content-icon:hover {
@@ -203,8 +204,8 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 600px; /* Doubled from 300px */
-            height: 600px; /* Doubled from 300px */
+            width: 600px;
+            height: 600px;
             background-color: var(--test-window-bg);
             border: 1px solid var(--container-border);
         }
@@ -302,18 +303,28 @@
             header.className = 'header';
             const titleImage = document.createElement('img');
             titleImage.className = 'title-image';
-            titleImage.src = 'https://github.com/therealkosmicnomad/therealkosmicnomad.github.io/blob/main/UI%20Assets/logo%20idea.png';
+            titleImage.src = 'https://github.com/therealkosmicnomad/therealkosmicnomad.github.io/blob/main/UI%20Assets/logo%20idea.png'; // Changed as requested
             titleImage.alt = 'Launch Pad Logo';
             header.appendChild(titleImage);
 
             const windowControls = document.createElement('div');
             windowControls.className = 'window-controls';
-            const buttons = ['_', '□', '✕'];
+            const buttons = ['✕']; // Removed '_' and '□', kept '✕'
             buttons.forEach(btnText => {
                 const btn = document.createElement('div');
                 btn.className = 'window-button';
                 btn.textContent = btnText;
                 windowControls.appendChild(btn);
+
+                // Add event listener for Exit button
+                if (btnText === '✕') {
+                    btn.addEventListener('click', function() {
+                        const confirmExit = confirm('You are about to exit from Launch Pad. Are you sure you wish to continue?');
+                        if (confirmExit) {
+                            window.location.href = 'https://therealkosmicnomad.github.io/';
+                        }
+                    });
+                }
             });
             header.appendChild(windowControls);
             app.appendChild(header);
@@ -392,7 +403,10 @@
             mainContent.appendChild(leftColumn);
 
             const testWindowContainer = document.createElement('div');
-            testWindowContainer.style.position = 'relative';
+            testWindowContainer.style.position = 'absolute'; // Changed to absolute for full centering
+            testWindowContainer.style.top = '50%'; // Centered vertically
+            testWindowContainer.style.left = '50%'; // Centered horizontally
+            testWindowContainer.style.transform = 'translate(-50%, -50%)'; // Adjusted transform
             const testWindowTitle = document.createElement('div');
             testWindowTitle.className = 'test-window-title';
             testWindowTitle.textContent = 'Test Window';
