@@ -463,11 +463,7 @@
             const displayTitle = document.createElement('div');
             displayTitle.className = 'sidebar-title';
             displayTitle.textContent = 'Display Type';
-            displayTitle.style.position = 'absolute'; // Changed to absolute positioning
-            displayTitle.style.left = '118px'; // X: 118
-            displayTitle.style.top = '185px'; // Y: 185
-            displayTitle.style.transform = 'translateX(-50%)'; // Center horizontally
-            app.appendChild(displayTitle); // Moved to app for absolute positioning
+            leftColumn.appendChild(displayTitle); // Reverted to original position
 
             const displayTypes = document.createElement('div');
             displayTypes.className = 'display-types';
@@ -510,11 +506,7 @@
             const contentTitle = document.createElement('div');
             contentTitle.className = 'sidebar-title';
             contentTitle.textContent = 'Content Selector';
-            contentTitle.style.position = 'absolute'; // Changed to absolute positioning
-            contentTitle.style.left = '119px'; // X: 119
-            contentTitle.style.top = '539px'; // Y: 539
-            contentTitle.style.transform = 'translateX(-50%)'; // Center horizontally
-            app.appendChild(contentTitle); // Moved to app for absolute positioning
+            leftColumn.appendChild(contentTitle); // Reverted to original position
 
             const contentSelector = document.createElement('div');
             contentSelector.className = 'content-selector';
