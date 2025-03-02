@@ -260,6 +260,7 @@
         /* Admin mode styles */
         .admin-mode .draggable:hover {
             outline: 2px solid blue;
+            cursor: move; /* Indicate draggability */
         }
         /* Disable highlights in admin mode */
         .admin-mode .display-icon:hover,
@@ -469,26 +470,49 @@
 
             // Define draggable elements
             const draggableElements = [
-                displayTitle, contentTitle, testWindowContainer, testWindowTitle,
-                propertiesTitle, propertiesWindow, saveDeployTitle, saveButton
+                displayTitle, displayTypes, contentTitle, contentSelector,
+                testWindowContainer, testWindowTitle, propertiesTitle, propertiesWindow,
+                saveDeployTitle, saveDeploy, saveButton
             ];
+
+            // Add draggable class for styling
+            draggableElements.forEach(el => el.classList.add('draggable'));
 
             // Admin mode functions
             function enableAdminMode() {
                 adminMode = true;
                 document.body.classList.add('admin-mode');
+
                 const appRect = app.getBoundingClientRect();
+
                 draggableElements.forEach(element => {
-                    // Reparent to app to ensure independence
-                    app.appendChild(element);
+                    // Capture original position and size before any changes
                     const elementRect = element.getBoundingClientRect();
+                    const originalPosition = window.getComputedStyle(element).position;
+
+                    // Insert placeholder if not already absolutely positioned
+                    if (originalPosition !== 'absolute' && originalPosition !== 'fixed') {
+                        const placeholder = document.createElement('div');
+                        placeholder.style.width = `${elementRect.width}px`;
+                        placeholder.style.height = `${elementRect.height}px`;
+                        placeholder.style.display = 'inline-block'; // Match inline behavior if needed
+                        element.parentNode.insertBefore(placeholder, element);
+                        element._placeholder = placeholder; // Store for potential cleanup
+                    }
+
+                    // Move to app container and lock position
+                    app.appendChild(element);
                     element.style.position = 'absolute';
                     element.style.left = `${elementRect.left - appRect.left}px`;
                     element.style.top = `${elementRect.top - appRect.top}px`;
                     element.style.width = `${elementRect.width}px`;
                     element.style.height = `${elementRect.height}px`;
+                    element.style.transform = 'none'; // Reset transform to avoid offsets
+
+                    // Add drag event listener
                     element.addEventListener('mousedown', startDrag);
                 });
+
                 document.addEventListener('mousemove', drag);
                 document.addEventListener('mouseup', endDrag);
             }
@@ -515,7 +539,7 @@
             }
 
             function drag(event) {
-                if (!isDragging) return;
+                if (!isDragging || !currentElement) return;
                 const appRect = app.getBoundingClientRect();
                 const newLeft = event.pageX - appRect.left - dragOffsetX;
                 const newTop = event.pageY - appRect.top - dragOffsetY;
@@ -542,6 +566,13 @@
                 prompt.style.maxWidth = '80%';
                 prompt.style.maxHeight = '80%';
                 prompt.style.overflow = 'auto';
+                prompt.onclick = function() {
+                    const selection = window.getSelection();
+                    const range = document.createRange();
+                    range.selectNodeContents(code);
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                };
 
                 const title = document.createElement('h2');
                 title.textContent = 'Updated Positions';
@@ -568,10 +599,7 @@
                     const style = el.style;
                     return `#${el.id} {\n    position: absolute;\n    left: ${style.left};\n    top: ${style.top};\n    width: ${style.width};\n    height: ${style.height};\n}`;
                 }).join('\n\n');
-                code.style.userSelect = 'text'; // Allow text selection
-                code.addEventListener('click', function() {
-                    window.getSelection().selectAllChildren(code);
-                });
+                code.style.userSelect = 'text';
                 prompt.appendChild(code);
 
                 document.body.appendChild(prompt);
