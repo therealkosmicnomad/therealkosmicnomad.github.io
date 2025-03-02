@@ -143,8 +143,8 @@
         .display-icon {
             width: 80px;
             height: 80px;
-            background-color: #fff;
-            border: 1px solid var(--border-color);
+            background-color: transparent; /* Changed to remove box */
+            border: none; /* Changed to remove box */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -318,7 +318,7 @@
 
                 if (btnText === '✕') {
                     btn.addEventListener('click', function() {
-                        localStorage.setItem('isAuthenticated', 'false'); // Changed to invalidate authentication
+                        localStorage.setItem('isAuthenticated', 'false');
                         window.location.href = 'https://therealkosmicnomad.github.io/';
                     });
                 }
@@ -354,9 +354,9 @@
             displayInner.className = 'display-types-inner';
             const displayIcons = [
                 { id: 'display1', src: 'https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/Vertical%20Screen%20Icon.png' },
-                { id: 'display2', text: '□' },
-                { id: 'display3', text: '□' }
-            ];
+                { id: 'display2', src: 'https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/Horizontal%20Screen%20Icon.png' },
+                { id: 'display3', src: 'https://raw.githubusercontent.com/therealkosmicnomad/therealkosmicnomad.github.io/main/UI%20Assets/Tablet%20Screen%20Icon.png' }
+            ]; // Updated options as requested
             displayIcons.forEach(icon => {
                 const div = document.createElement('div');
                 div.className = 'display-icon';
@@ -366,8 +366,6 @@
                     img.src = icon.src;
                     img.alt = 'Display Icon';
                     div.appendChild(img);
-                } else {
-                    div.textContent = icon.text;
                 }
                 displayInner.appendChild(div);
             });
@@ -441,7 +439,6 @@
 
             app.appendChild(mainContent);
 
-            // Add event listener for save button
             saveButton.addEventListener('click', function() {
                 const promptContainer = document.createElement('div');
                 promptContainer.style.position = 'fixed';
