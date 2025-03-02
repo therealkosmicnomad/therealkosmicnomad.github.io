@@ -260,7 +260,7 @@
         /* Admin mode styles */
         .admin-mode .draggable:hover {
             outline: 2px solid blue;
-            cursor: move; /* Indicate draggability */
+            cursor: move;
         }
         /* Disable highlights in admin mode */
         .admin-mode .display-icon:hover,
@@ -270,12 +270,57 @@
             background-color: inherit;
             transform: none;
         }
+        /* Composition journal styles */
+        .journal-prompt {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 400px;
+            background: linear-gradient(to right, #fff 50%, #fff 50%);
+            border: 2px solid #000;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            z-index: 1000;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-image: repeating-linear-gradient(#fff 0px, #fff 24px, #000 25px);
+            background-size: 100% 25px;
+        }
+        .journal-prompt h2 {
+            text-align: center;
+            font-family: 'Courier New', Courier, monospace;
+            margin-bottom: 20px;
+            color: #000;
+        }
+        .journal-prompt pre {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+            color: #000;
+            background: transparent;
+            padding: 0;
+            margin: 0;
+            user-select: text;
+        }
+        .journal-prompt .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #000;
+        }
     </style>
 </head>
 <body>
     <script>
-        // Check authentication status on page load
-        console.log('Checking authentication:', localStorage.getItem('isAuthenticated'));
         if (localStorage.getItem('isAuthenticated') !== 'true') {
             window.location.href = 'https://therealkosmicnomad.github.io/';
         }
@@ -291,6 +336,7 @@
             let currentElement = null;
             let dragOffsetX = 0;
             let dragOffsetY = 0;
+            const originalPositions = new Map();
 
             const header = document.createElement('div');
             header.className = 'header';
@@ -486,30 +532,22 @@
                 const appRect = app.getBoundingClientRect();
 
                 draggableElements.forEach(element => {
-                    // Capture original position and size before any changes
                     const elementRect = element.getBoundingClientRect();
-                    const originalPosition = window.getComputedStyle(element).position;
-
-                    // Insert placeholder if not already absolutely positioned
-                    if (originalPosition !== 'absolute' && originalPosition !== 'fixed') {
-                        const placeholder = document.createElement('div');
-                        placeholder.style.width = `${elementRect.width}px`;
-                        placeholder.style.height = `${elementRect.height}px`;
-                        placeholder.style.display = 'inline-block'; // Match inline behavior if needed
-                        element.parentNode.insertBefore(placeholder, element);
-                        element._placeholder = placeholder; // Store for potential cleanup
-                    }
-
-                    // Move to app container and lock position
-                    app.appendChild(element);
                     element.style.position = 'absolute';
                     element.style.left = `${elementRect.left - appRect.left}px`;
                     element.style.top = `${elementRect.top - appRect.top}px`;
                     element.style.width = `${elementRect.width}px`;
                     element.style.height = `${elementRect.height}px`;
-                    element.style.transform = 'none'; // Reset transform to avoid offsets
+                    element.style.transform = 'none'; // Reset any transform
 
-                    // Add drag event listener
+                    // Store original position for comparison
+                    originalPositions.set(element, {
+                        left: element.style.left,
+                        top: element.style.top,
+                        width: element.style.width,
+                        height: element.style.height
+                    });
+
                     element.addEventListener('mousedown', startDrag);
                 });
 
@@ -525,7 +563,7 @@
                 });
                 document.removeEventListener('mousemove', drag);
                 document.removeEventListener('mouseup', endDrag);
-                showUpdatedPositions();
+                showMovedPositions();
             }
 
             function startDrag(event) {
@@ -534,6 +572,7 @@
                 const rect = currentElement.getBoundingClientRect();
                 dragOffsetX = event.pageX - rect.left;
                 dragOffsetY = event.pageY - rect.top;
+                app.appendChild(currentElement); // Move to app only when dragging starts
                 isDragging = true;
                 event.preventDefault();
             }
@@ -552,54 +591,35 @@
                 currentElement = null;
             }
 
-            function showUpdatedPositions() {
-                const prompt = document.createElement('div');
-                prompt.style.position = 'fixed';
-                prompt.style.top = '50%';
-                prompt.style.left = '50%';
-                prompt.style.transform = 'translate(-50%, -50%)';
-                prompt.style.backgroundColor = 'var(--menu-bg)';
-                prompt.style.padding = '20px';
-                prompt.style.borderRadius = '8px';
-                prompt.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
-                prompt.style.zIndex = '1000';
-                prompt.style.maxWidth = '80%';
-                prompt.style.maxHeight = '80%';
-                prompt.style.overflow = 'auto';
-                prompt.onclick = function() {
-                    const selection = window.getSelection();
-                    const range = document.createRange();
-                    range.selectNodeContents(code);
-                    selection.removeAllRanges();
-                    selection.addRange(range);
-                };
+            function showMovedPositions() {
+                const movedElements = draggableElements.filter(el => {
+                    const orig = originalPositions.get(el);
+                    const curr = el.style;
+                    return orig.left !== curr.left || orig.top !== curr.top;
+                });
 
-                const title = document.createElement('h2');
-                title.textContent = 'Updated Positions';
-                prompt.appendChild(title);
+                if (movedElements.length === 0) return; // No prompt if nothing moved
+
+                const prompt = document.createElement('div');
+                prompt.className = 'journal-prompt';
 
                 const closeButton = document.createElement('button');
+                closeButton.className = 'close-button';
                 closeButton.textContent = 'X';
-                closeButton.style.position = 'absolute';
-                closeButton.style.top = '5px';
-                closeButton.style.right = '5px';
-                closeButton.style.background = 'none';
-                closeButton.style.border = 'none';
-                closeButton.style.fontSize = '16px';
-                closeButton.style.cursor = 'pointer';
                 closeButton.addEventListener('click', function() {
                     document.body.removeChild(prompt);
                 });
                 prompt.appendChild(closeButton);
 
+                const title = document.createElement('h2');
+                title.textContent = `${movedElements.length} Item${movedElements.length !== 1 ? 's' : ''} Moved:`;
+                prompt.appendChild(title);
+
                 const code = document.createElement('pre');
-                code.style.whiteSpace = 'pre-wrap';
-                code.style.fontFamily = 'monospace';
-                code.textContent = draggableElements.map(el => {
+                code.textContent = movedElements.map(el => {
                     const style = el.style;
                     return `#${el.id} {\n    position: absolute;\n    left: ${style.left};\n    top: ${style.top};\n    width: ${style.width};\n    height: ${style.height};\n}`;
                 }).join('\n\n');
-                code.style.userSelect = 'text';
                 prompt.appendChild(code);
 
                 document.body.appendChild(prompt);
