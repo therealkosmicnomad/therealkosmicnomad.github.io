@@ -339,47 +339,6 @@
                 item.className = 'menu-item';
                 item.textContent = itemText;
                 menuBar.appendChild(item);
-
-                if (itemText === 'ABOUT') {
-                    item.addEventListener('click', function() {
-                        if (adminMode) return;
-                        const aboutPrompt = document.createElement('div');
-                        aboutPrompt.style.position = 'fixed';
-                        aboutPrompt.style.top = '50%';
-                        aboutPrompt.style.left = '50%';
-                        aboutPrompt.style.transform = 'translate(-50%, -50%)';
-                        aboutPrompt.style.width = '300px';
-                        aboutPrompt.style.height = 'auto';
-                        aboutPrompt.style.backgroundColor = 'var(--menu-bg)';
-                        aboutPrompt.style.borderRadius = '8px';
-                        aboutPrompt.style.padding = '15px';
-                        aboutPrompt.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
-                        aboutPrompt.style.zIndex = '1000';
-                        aboutPrompt.style.textAlign = 'center';
-
-                        const promptText = document.createElement('p');
-                        promptText.textContent = "Launch Pad is the passion project of yours truly, Michael Van Nguyen. With over 6+ years in the world of digital signage - Michael believes he can use A.I. to truly innovate this space and take it to the next level! LETS GO FAM!!!!!!";
-                        promptText.style.fontSize = '14px';
-                        promptText.style.color = 'var(--text-color)';
-                        aboutPrompt.appendChild(promptText);
-
-                        const exitButton = document.createElement('button');
-                        exitButton.textContent = 'Exit';
-                        exitButton.style.marginTop = '10px';
-                        exitButton.style.padding = '5px 10px';
-                        exitButton.style.backgroundColor = '#3498db';
-                        exitButton.style.color = '#fff';
-                        exitButton.style.border = 'none';
-                        exitButton.style.borderRadius = '4px';
-                        exitButton.style.cursor = 'pointer';
-                        exitButton.addEventListener('click', function() {
-                            document.body.removeChild(aboutPrompt);
-                        });
-                        aboutPrompt.appendChild(exitButton);
-
-                        document.body.appendChild(aboutPrompt);
-                    });
-                }
             });
             app.appendChild(menuBar);
 
@@ -390,7 +349,7 @@
             leftColumn.className = 'left-column';
 
             const displayTitle = document.createElement('div');
-            displayTitle.className = 'sidebar-title draggable';
+            displayTitle.className = 'sidebar-title';
             displayTitle.id = 'display-title';
             displayTitle.textContent = 'Display Type';
             leftColumn.appendChild(displayTitle);
@@ -398,7 +357,6 @@
             const displayTypes = document.createElement('div');
             displayTypes.className = 'display-types';
             displayTypes.id = 'display-types';
-            displayTypes.classList.add('draggable');
             const displayInner = document.createElement('div');
             displayInner.className = 'display-types-inner';
             const displayIcons = [
@@ -437,7 +395,7 @@
             leftColumn.appendChild(displayTypes);
 
             const contentTitle = document.createElement('div');
-            contentTitle.className = 'sidebar-title draggable';
+            contentTitle.className = 'sidebar-title';
             contentTitle.id = 'content-title';
             contentTitle.textContent = 'Content Selector';
             leftColumn.appendChild(contentTitle);
@@ -445,7 +403,6 @@
             const contentSelector = document.createElement('div');
             contentSelector.className = 'content-selector';
             contentSelector.id = 'content-selector';
-            contentSelector.classList.add('draggable');
             const contentInner = document.createElement('div');
             contentInner.className = 'content-selector-inner';
             const contentIcons = [
@@ -466,18 +423,14 @@
 
             const testWindowContainer = document.createElement('div');
             testWindowContainer.id = 'test-window-container';
-            testWindowContainer.classList.add('draggable');
-            testWindowContainer.style.position = 'absolute';
-            testWindowContainer.style.top = '50%';
-            testWindowContainer.style.left = '50%';
-            testWindowContainer.style.transform = 'translate(-50%, -50%)';
             const testWindowTitle = document.createElement('div');
-            testWindowTitle.className = 'test-window-title draggable';
+            testWindowTitle.className = 'test-window-title';
             testWindowTitle.id = 'test-window-title';
             testWindowTitle.textContent = 'Test Window';
             testWindowContainer.appendChild(testWindowTitle);
             const testWindow = document.createElement('div');
             testWindow.className = 'test-window';
+            testWindow.id = 'test-window';
             testWindowContainer.appendChild(testWindow);
             app.appendChild(testWindowContainer);
 
@@ -485,7 +438,7 @@
             rightColumn.className = 'right-column';
 
             const propertiesTitle = document.createElement('div');
-            propertiesTitle.className = 'properties-title draggable';
+            propertiesTitle.className = 'properties-title';
             propertiesTitle.id = 'properties-title';
             propertiesTitle.textContent = 'Properties Window';
             rightColumn.appendChild(propertiesTitle);
@@ -493,21 +446,19 @@
             const propertiesWindow = document.createElement('div');
             propertiesWindow.className = 'properties-window';
             propertiesWindow.id = 'properties-window';
-            propertiesWindow.classList.add('draggable');
             rightColumn.appendChild(propertiesWindow);
 
             const saveDeploy = document.createElement('div');
             saveDeploy.className = 'save-deploy';
             saveDeploy.id = 'save-deploy';
-            saveDeploy.classList.add('draggable');
             const saveDeployTitle = document.createElement('div');
-            saveDeployTitle.className = 'save-deploy-title draggable';
+            saveDeployTitle.className = 'save-deploy-title';
             saveDeployTitle.id = 'save-deploy-title';
             saveDeployTitle.textContent = 'Save & Deploy Button';
             saveDeploy.appendChild(saveDeployTitle);
 
             const saveButton = document.createElement('div');
-            saveButton.className = 'save-button draggable';
+            saveButton.className = 'save-button';
             saveButton.id = 'save-button';
             saveButton.innerHTML = '<span class="check-icon">✓</span><span class="save-text">Everything looks good!</span>';
             saveDeploy.appendChild(saveButton);
@@ -516,11 +467,10 @@
 
             app.appendChild(mainContent);
 
-            // Define draggable elements (now including text and buttons)
+            // Define draggable elements
             const draggableElements = [
-                displayTitle, displayTypes, contentTitle, contentSelector,
-                testWindowContainer, testWindowTitle, propertiesTitle, propertiesWindow,
-                saveDeployTitle, saveDeploy, saveButton
+                displayTitle, contentTitle, testWindowContainer, testWindowTitle,
+                propertiesTitle, propertiesWindow, saveDeployTitle, saveButton
             ];
 
             // Admin mode functions
@@ -529,12 +479,14 @@
                 document.body.classList.add('admin-mode');
                 const appRect = app.getBoundingClientRect();
                 draggableElements.forEach(element => {
+                    // Reparent to app to ensure independence
+                    app.appendChild(element);
                     const elementRect = element.getBoundingClientRect();
                     element.style.position = 'absolute';
                     element.style.left = `${elementRect.left - appRect.left}px`;
                     element.style.top = `${elementRect.top - appRect.top}px`;
-                    element.style.width = `${elementRect.width}px`; // Preserve width
-                    element.style.height = `${elementRect.height}px`; // Preserve height
+                    element.style.width = `${elementRect.width}px`;
+                    element.style.height = `${elementRect.height}px`;
                     element.addEventListener('mousedown', startDrag);
                 });
                 document.addEventListener('mousemove', drag);
@@ -616,12 +568,15 @@
                     const style = el.style;
                     return `#${el.id} {\n    position: absolute;\n    left: ${style.left};\n    top: ${style.top};\n    width: ${style.width};\n    height: ${style.height};\n}`;
                 }).join('\n\n');
+                code.style.userSelect = 'text'; // Allow text selection
+                code.addEventListener('click', function() {
+                    window.getSelection().selectAllChildren(code);
+                });
                 prompt.appendChild(code);
 
                 document.body.appendChild(prompt);
             }
 
-            // Save button functionality
             saveButton.addEventListener('click', function() {
                 if (adminMode) return;
                 const promptContainer = document.createElement('div');
