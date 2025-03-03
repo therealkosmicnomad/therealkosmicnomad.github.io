@@ -76,7 +76,7 @@
             background-color: #f0f0f0;
             transform: scale(1.1);
         }
-        .admin-button.activated {
+        .window-button.activated {
             background-color: green;
         }
         .menu-bar {
@@ -262,6 +262,7 @@
             outline: 2px solid blue;
             cursor: move;
         }
+        /* Disable highlights in admin mode */
         .admin-mode .display-icon:hover,
         .admin-mode .content-icon:hover,
         .admin-mode .menu-item:hover,
@@ -333,6 +334,7 @@
             app.className = 'launch-pad';
 
             let adminMode = false;
+            let layerLockActive = false; // New state for Layer Lock
             let isDragging = false;
             let currentElement = null;
             let dragOffsetX = 0;
@@ -349,12 +351,14 @@
 
             const windowControls = document.createElement('div');
             windowControls.className = 'window-controls';
-            const buttons = ['👤', '✕'];
+            const buttons = ['👤', '🔒', '✕']; // Updated to include Layer Lock button
             buttons.forEach(btnText => {
                 const btn = document.createElement('div');
                 btn.className = 'window-button';
                 if (btnText === '👤') {
                     btn.classList.add('admin-button');
+                } else if (btnText === '🔒') {
+                    btn.classList.add('layer-lock-button');
                 }
                 btn.textContent = btnText;
                 windowControls.appendChild(btn);
@@ -367,6 +371,17 @@
                         } else {
                             enableAdminMode();
                             btn.classList.add('activated');
+                        }
+                    });
+                } else if (btnText === '🔒') {
+                    btn.addEventListener('click', function() {
+                        layerLockActive = !layerLockActive;
+                        if (layerLockActive) {
+                            btn.classList.add('activated');
+                            lockLayers(); // Aggressively lock positions when activated
+                        } else {
+                            btn.classList.remove('activated');
+                            unlockLayers(); // Unlock when deactivated
                         }
                     });
                 } else if (btnText === '✕') {
@@ -558,8 +573,31 @@
                 showMovedPositions();
             }
 
+            function lockLayers() {
+                // Aggressively lock positions by setting inline styles
+                const appRect = app.getBoundingClientRect();
+                draggableElements.forEach(element => {
+                    const elementRect = element.getBoundingClientRect();
+                    element.style.position = 'absolute';
+                    element.style.left = `${elementRect.left - appRect.left}px`;
+                    element.style.top = `${elementRect.top - appRect.top}px`;
+                    element.style.width = `${elementRect.width}px`;
+                    element.style.height = `${elementRect.height}px`;
+                    // Remove any existing drag listeners to ensure lock
+                    element.removeEventListener('mousedown', startDrag);
+                    // Only add drag listener if adminMode is also active
+                    if (adminMode) {
+                        element.addEventListener('mousedown', startDrag);
+                    }
+                });
+            }
+
+            function unlockLayers() {
+                // Leave elements in their current state; dragging is already disabled unless adminMode is active
+            }
+
             function startDrag(event) {
-                if (!adminMode) return;
+                if (!adminMode || !layerLockActive) return; // Require both modes
                 currentElement = event.currentTarget;
                 const rect = currentElement.getBoundingClientRect();
                 dragOffsetX = event.pageX - rect.left;
@@ -626,10 +664,11 @@
                 promptContainer.style.backgroundColor = 'lightblue';
                 promptContainer.style.padding = '20px';
                 promptContainer.style.borderRadius = '8px';
+                promptContainer.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
                 promptContainer.style.zIndex = '1000';
 
                 const promptText = document.createElement('p');
-                promptText.textContent = "Nice project! Assign a custom Launch Token.";
+                promptText.textContent = "Nice project! If you're ready to push this content out to your digital sign, please assign a custom Launch Token to bundle this content and deploy it out.";
                 promptText.style.marginBottom = '20px';
                 promptContainer.appendChild(promptText);
 
@@ -647,10 +686,42 @@
                     input.style.height = '30px';
                     input.style.textAlign = 'center';
                     input.style.fontSize = '16px';
+                    input.style.backgroundColor = 'white';
+                    input.style.border = '1px solid #ccc';
+                    input.style.borderRadius = '4px';
+                    input.addEventListener('input', (e) => {
+                        e.target.value = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
+                        if (e.target.value && i < 6) inputs[i + 1].focus();
+                        checkAllFilled();
+                    });
                     inputs.push(input);
                     inputContainer.appendChild(input);
                 }
+
+                const checkmark = document.createElement('span');
+                checkmark.textContent = '✓';
+                checkmark.style.color = 'green';
+                checkmark.style.fontSize = '24px';
+                checkmark.style.marginLeft = '20px';
+                checkmark.style.cursor = 'pointer';
+                checkmark.style.display = 'none';
+                promptContainer.appendChild(checkmark);
+
+                function checkAllFilled() {
+                    const allFilled = inputs.every(input => input.value.length === 1);
+                    checkmark.style.display = allFilled ? 'inline' : 'none';
+                }
+
+                checkmark.addEventListener('click', () => {
+                    const launchToken = inputs.map(input => input.value).join('');
+                    const tokenDisplay = document.createElement('p');
+                    tokenDisplay.textContent = `Launch Token: ${launchToken}`;
+                    propertiesWindow.appendChild(tokenDisplay);
+                    document.body.removeChild(promptContainer);
+                });
+
                 document.body.appendChild(promptContainer);
+                inputs[0].focus();
             });
         });
     </script>
