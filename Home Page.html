@@ -189,10 +189,6 @@
             transition: transform 0.3s ease;
         }
         .test-window {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
             width: 600px;
             height: 600px;
             background-color: var(--test-window-bg);
@@ -249,10 +245,6 @@
             color: var(--text-color);
         }
         .test-window-title {
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
             font-size: 12px;
             color: var(--text-color);
             text-align: center;
@@ -317,6 +309,49 @@
             cursor: pointer;
             color: #000;
         }
+        /* Default positions for specified items */
+        #test-window-container {
+            position: absolute;
+            left: 53px;
+            top: 600px;
+            width: 1880px;
+            height: 0px;
+        }
+        #test-window-title {
+            position: absolute;
+            left: 1013.94px;
+            top: 282px;
+            width: 68.0312px;
+            height: 14px;
+        }
+        #properties-title {
+            position: absolute;
+            left: 1397px;
+            top: 324px;
+            width: 300px;
+            height: 14px;
+        }
+        #properties-window {
+            position: absolute;
+            left: 1396px;
+            top: 341px;
+            width: 300px;
+            height: 250px;
+        }
+        #save-deploy-title {
+            position: absolute;
+            left: 1496px;
+            top: 701px;
+            width: 300px;
+            height: 14px;
+        }
+        #save-button {
+            position: absolute;
+            left: 1457.56px;
+            top: 718px;
+            width: 208.859px;
+            height: 40px;
+        }
     </style>
 </head>
 <body>
@@ -334,7 +369,7 @@
             app.className = 'launch-pad';
 
             let adminMode = false;
-            let layerLockActive = false; // New state for Layer Lock
+            let layerLockActive = false;
             let isDragging = false;
             let currentElement = null;
             let dragOffsetX = 0;
@@ -351,7 +386,7 @@
 
             const windowControls = document.createElement('div');
             windowControls.className = 'window-controls';
-            const buttons = ['👤', '🔒', '✕']; // Updated to include Layer Lock button
+            const buttons = ['👤', '🔒', '✕'];
             buttons.forEach(btnText => {
                 const btn = document.createElement('div');
                 btn.className = 'window-button';
@@ -378,10 +413,10 @@
                         layerLockActive = !layerLockActive;
                         if (layerLockActive) {
                             btn.classList.add('activated');
-                            lockLayers(); // Aggressively lock positions when activated
+                            lockLayers();
                         } else {
                             btn.classList.remove('activated');
-                            unlockLayers(); // Unlock when deactivated
+                            unlockLayers();
                         }
                     });
                 } else if (btnText === '✕') {
@@ -486,6 +521,7 @@
 
             const testWindowContainer = document.createElement('div');
             testWindowContainer.id = 'test-window-container';
+            testWindowContainer.classList.add('draggable');
             const testWindowTitle = document.createElement('div');
             testWindowTitle.className = 'test-window-title draggable';
             testWindowTitle.id = 'test-window-title';
@@ -536,8 +572,6 @@
                 saveDeployTitle, saveDeploy, saveButton
             ];
 
-            draggableElements.forEach(el => el.classList.add('draggable'));
-
             function enableAdminMode() {
                 adminMode = true;
                 document.body.classList.add('admin-mode');
@@ -574,7 +608,6 @@
             }
 
             function lockLayers() {
-                // Aggressively lock positions by setting inline styles
                 const appRect = app.getBoundingClientRect();
                 draggableElements.forEach(element => {
                     const elementRect = element.getBoundingClientRect();
@@ -583,9 +616,7 @@
                     element.style.top = `${elementRect.top - appRect.top}px`;
                     element.style.width = `${elementRect.width}px`;
                     element.style.height = `${elementRect.height}px`;
-                    // Remove any existing drag listeners to ensure lock
                     element.removeEventListener('mousedown', startDrag);
-                    // Only add drag listener if adminMode is also active
                     if (adminMode) {
                         element.addEventListener('mousedown', startDrag);
                     }
@@ -593,11 +624,11 @@
             }
 
             function unlockLayers() {
-                // Leave elements in their current state; dragging is already disabled unless adminMode is active
+                // No action needed unless reverting to original layout is desired
             }
 
             function startDrag(event) {
-                if (!adminMode || !layerLockActive) return; // Require both modes
+                if (!adminMode || !layerLockActive) return;
                 currentElement = event.currentTarget;
                 const rect = currentElement.getBoundingClientRect();
                 dragOffsetX = event.pageX - rect.left;
